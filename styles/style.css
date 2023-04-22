@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    background-color: rgb(255, 250, 206);
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+
+#main-canvas,
+#gameover-screen,
+#win-screen,
+#offroad-canvas,
+#thankyou-screen {
+    display: none;
+}
+

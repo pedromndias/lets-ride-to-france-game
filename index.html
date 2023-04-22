@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's go to France</title>
+
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Start Screen -->
+        <div id="start-screen">
+            <h1>Let's ride to France</h1>
+            <h2>Help me to arrive in La France!</h2>
+            <p>We start in Barcelona..</p>
+            <p>Stay on the road, avoid cars and road blocks.</p>
+            <hr>
+            <h2>Image Here</h2>
+            <hr>
+            <p>Use your keyboard arrows (<-) and (->) to ride.</p>
+            <!-- <p>If we arrive before lunch, maybe there's time for some off-road..</p> -->
+            <button id="start-main-game-btn">Let's go!</button>
+        </div>
+    
+        <!-- Main Screen -->
+        <canvas id="main-canvas" width="600" height="600"></canvas>
+    
+        <!-- Game Over Screen -->
+        <div id="gameover-screen">
+            <h2>Oh.. bad luck! Please be careful next time.</h2>
+            <hr>
+            <h2>Image Here (ambulance)</h2>
+            <hr>
+            <button id="game-over-restart-btn">Restart game?</button>
+        </div>
+    
+        <!-- Win Screen -->
+        <div id="win-screen">
+            <h2>We arrived!</h2>
+            <p>Thanks for the help, now let's enjoy some frencg cuisine..</p>
+            <hr>
+            <h2>Image Here (french food? Oysters?)</h2>
+            <hr>
+            
+            <button id="back-to-start-btn">Maybe go again?</button>
+            <button id="exit-btn">Exit</button>
+            <p>What about some off-road after lunch?</p>
+            <button id="start-offroad-btn">Let's get dirty!</button>
+        </div>
+    
+        <!-- Special track screen -->
+        <!-- <canvas id="offroad-canvas" width="600" height="600"></canvas> -->
+    
+        <!-- Thank you screen -->
+        <div id="thankyou-screen">
+            <h2>Thanks for playing!</h2>
+            <hr>
+            <h2>Image Here (GIF with project screenshots?)</h2>
+            <hr>
+            <a href="#">Take a look at the code</a>
+        </div>
+    </div>
+
+    <script src="./javascript/main.js"></script>
+    <script src="./javascript/MainGame.js"></script>
+    <script src="./javascript/Sprite.js"></script>
+    <script src="./javascript/Rider.js"></script>
+    <script src="./javascript/Road.js"></script>
+    
+</body>
+</html>
