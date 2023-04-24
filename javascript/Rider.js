@@ -1,34 +1,63 @@
 // * Here we create the class for the rider:
 class Rider {
     // * Add rider's properties:
-    constructor(direction) {
-        // Rider's properties:
-        this.img = new Image();
+    constructor() {
+        // Let's create an object that has the values of the rider's directions:
+        this.riderDirectionObj = {
+            left: false,
+            right: false,
+            up: false,
+            down: false,
+        };
+
+        // Let's also create an object with the different images for the rider:
+        this.imagesObj = {
+            left: new Image(),
+            right: new Image(),
+            up: new Image(),
+        };
         // The rider's image will change depending if it riding straight, left or right:
-        this.direction = direction;
-        if (direction === "straight") {
-            this.img.src = "images/moto1.png";
-        } else if (direction === "left") {
-            this.img.src = "images/moto1-left.png";
-        } else if (direction === "right") {
-            this.img.src = "images/moto1-right.png";
-        }
+        this.imagesObj.left.src = "images/moto1-left.png";
+        this.imagesObj.right.src = "images/moto1-right.png";
+        this.imagesObj.up.src = "images/moto1.png";
+        // Due to optimization, let's create variable of those images:
+        this.imageLeft = this.imagesObj.left;
+        this.imageRight = this.imagesObj.right;
+        this.imageUp = this.imagesObj.up;
+
         this.x = canvas.width / 2;
         this.y = canvas.height - 100;
         this.w = 80;
         this.h = 120;
+        // Create a variable for the rider's movement:
+        this.moveSpeed = 4;
     }
 
     // * Add rider's methods:
+    // Draw the rider:
     draw = () => {
-        ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-    }
+        if (this.riderDirectionObj.left) {
+            ctx.drawImage(this.imageLeft, this.x, this.y, this.w, this.h);
+        } else if (this.riderDirectionObj.right) {
+            ctx.drawImage(this.imageRight, this.x, this.y, this.w, this.h);
+        } else {
+            ctx.drawImage(this.imageUp, this.x, this.y, this.w, this.h);
+        }
+    };
 
-    moveLeft = () => {
-        this.x -= 4;
-    }
-
-    moveRight = () => {
-        this.x += 4;
-    }
+    // Move rider in different directions:
+    moveRider = () => {
+        if (this.riderDirectionObj.left) {
+            this.x -= this.moveSpeed;
+        }
+        if (this.riderDirectionObj.right) {
+            this.x += this.moveSpeed;
+        }
+        if (this.riderDirectionObj.up) {
+            this.y -= this.moveSpeed;
+        }
+        if (this.riderDirectionObj.down) {
+            this.y += this.moveSpeed;
+        }
+    };
 }

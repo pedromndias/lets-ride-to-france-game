@@ -2,11 +2,13 @@
 class MainGame {
     // * Add main game's properties (all main game's elements):
     constructor() {
+        // * In this constructor we have all the initial elements and values of the main game.
         // The background:
         this.background = new Image();
         this.background.src = "images/blue-sky1.jpg";
 
         // Create a new Road object:
+        // This is a different road from the following ones, this is the first road show already when the game starts:
         this.firstRoad = new Road(0, true);
         // Create an array of new road sets:
         this.roadArr = [];
@@ -23,8 +25,7 @@ class MainGame {
         this.spritesArr = [];
 
         // Create a new Rider object:
-        this.straightLine = "straight"; // Initial value of the rider's direction.
-        this.rider = new Rider(this.straightLine);
+        this.rider = new Rider();
 
         // Let's create a variabel to check is the game is on:
         this.isGameOn = true;
@@ -33,30 +34,36 @@ class MainGame {
     // * Add the main game's methods (all main game's actions):
 
     // Create a function that makes the road move:
-    // If one set of road starts touching the bottom part, we shoud insert a new one on top:
+    // If one set of road's position Y touches the begining of the canvas, we shoud insert a new one on top:
     roadKeepsMovingDown = () => {
-        // If it is our first new road (array empty) or if the last item of the array enters completelly inside the canvas, we will add a new road set to the arry:
-        if (this.roadArr.length === 0 || this.roadArr[this.roadArr.length-1].y > 0) {
-            // console.log("Running roadKeepsMovingDown");
+        // If it is our first new road (array empty) or if the last item of the array enters completelly inside the canvas, we will add a new road set to the array:
+        if (
+            this.roadArr.length === 0 ||
+            this.roadArr[this.roadArr.length - 1].y > 0
+        ) {
+            // console.log("Running roadKeepsMovingDown"); //* TEST
             // Let's create more road sets but starting before the first road:
             let newRoadSet = new Road(-canvas.height, true);
-            this.roadArr.push(newRoadSet)
+            this.roadArr.push(newRoadSet);
         }
-        // Check that the array has not infinite elements:
-        // console.log(this.roadArr.length);
-    }
+        // Check that the array is adding and removing elements correctly:
+        // console.log(this.roadArr.length); //* TEST
+    };
 
     // We need to remove the road from the array:
     removeRoadOut = () => {
         if (this.roadArr[0].y > canvas.height) {
             this.roadArr.shift();
         }
-    }
+    };
 
     // Let's create a method to show our sprites depending on the isCarSprite variable (cars or rocks):
     showSprites = () => {
         // If the sprite's array is empty or if the last one passes a certain position in the canvas (450px, should be adjusted depending on the road blocks and police cars), we will create more sprites:
-        if(this.spritesArr.length === 0 || this.spritesArr[this.spritesArr.length-1].y > 450) {
+        if (
+            this.spritesArr.length === 0 ||
+            this.spritesArr[this.spritesArr.length - 1].y > 450
+        ) {
             let newSprite;
             if (this.isCarSprite) {
                 newSprite = new Sprite("car");
@@ -66,15 +73,15 @@ class MainGame {
             // Now we push the new sprite to the sprite's array:
             this.spritesArr.push(newSprite);
         }
-    }
+    };
 
     // Like with the roads, we need to remove the sprites after the canvas:
     removeSprite = () => {
-        if(this.spritesArr[0].y > canvas.height) {
+        if (this.spritesArr[0].y > canvas.height) {
             this.spritesArr.shift();
         }
-    }
-    
+    };
+
     // Create a function to end the game:
     gameOver = () => {
         // 1. Stop de game:
@@ -85,31 +92,31 @@ class MainGame {
 
         // 3. Show final screen:
         gameoverScreen.style.display = "flex";
-    }
+    };
 
     // Create a function to draw the background:
     drawBackground = () => {
         ctx.drawImage(this.background, 0, 0, canvas.width, 200);
-    }
+    };
 
     // Create a function to clear the canvas:
     clearCanvas = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    };
 
     // Let's create the game's loop (recursion):
     gameLoop = () => {
-        // console.log("Testing recursion");
-        // 1. Clean the canvas:
+        // console.log("Testing recursion"); //* TEST
+        // * 1. Clean the canvas:
         this.clearCanvas();
 
-        // 2. Actions and elements' movements:
+        // * 2. Actions and elements' movements:
         // Make the road sets move:
         this.firstRoad.move();
         this.roadArr.forEach((eachRoad) => {
             eachRoad.move();
-        })
-        
+        });
+
         // Show the road sets moving:
         this.roadKeepsMovingDown();
 
@@ -119,7 +126,7 @@ class MainGame {
         // Make the sprites move on the road:
         this.spritesArr.forEach((eachSprite) => {
             eachSprite.move();
-        })
+        });
 
         // Show the sprites moving:
         this.showSprites();
@@ -127,24 +134,24 @@ class MainGame {
         // And remove the sprite from the array:
         this.removeSprite();
 
+        // Make the rider move:
+        this.rider.moveRider();
 
-        // 3. Elements' drawing on canvas:
+        // * 3. Elements' drawing on canvas:
         this.firstRoad.draw();
         this.roadArr.forEach((eachRoad) => {
             eachRoad.draw();
-        })
+        });
         this.drawBackground();
         this.spritesArr.forEach((eachSprite) => {
             eachSprite.draw();
-        })
+        });
         this.rider.draw();
 
-        // 4. Recursion (requestAnimationFrame)
+        // * 4. Recursion (requestAnimationFrame)
         // Only run this if isGameOn is true:
         if (this.isGameOn === true) {
-            requestAnimationFrame(this.gameLoop) // 60 times per second (fps of the monitor) it calls gameLoop()
+            requestAnimationFrame(this.gameLoop); // 60 times per second (fps of the monitor) it calls gameLoop()
         }
-    }
-
-    
+    };
 }

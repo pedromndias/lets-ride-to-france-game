@@ -2,7 +2,7 @@
 class Sprite {
     // * Add Sprite's properties:
     constructor(sprite) {
-        console.log(sprite)
+        // console.log(sprite) // * TEST
         let randomNumImage = 0;
         // Let's create the logic for the image of or Sprite and the properties to then generate our image:
         this.img = new Image();
@@ -10,7 +10,7 @@ class Sprite {
         this.w;
         this.h;
         let spriteSpeed;
-        
+
         // Depending on the sprite variable, we will render different type of cars/blocks/rocks:
         if (sprite === "car") {
             // Since we have multiple cars, we will create a random variable so we render different images:
@@ -21,13 +21,13 @@ class Sprite {
             // todo Adapt to rocks: randomNumImage = Math.floor(Math.random() * 7) + 1;
             // todo Adapt to rocks: this.img.src = `images/car${randomNumImage}.png`;
         }
-        console.log(this.img.src)
+        console.log(this.img.src);
         // We also need a variable to randomly position the image on the X axis (120, 208, 296 or 384 pixels, which are the X position of the lanes of the vehicles):
         let randomNumX = 0;
         // todo We will create a setInterval so the sprite Speed goes up (every 10 seconds)
 
         // The road blocks should move as fast as the road and should only be on the side left lane (89px):
-        
+
         if (randomNumImage === 8) {
             spriteSpeed = 4;
             randomNumX = 120;
@@ -39,7 +39,7 @@ class Sprite {
             this.w = 100;
             this.h = 150;
         }
-        
+
         this.x = randomNumX;
         this.y = 140;
         this.speed = spriteSpeed;
@@ -49,9 +49,9 @@ class Sprite {
     // Draw it:
     draw = () => {
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-    }
+    };
     // Move it torwards the bottom;
     move = () => {
         this.y += this.speed;
-    }
+    };
 }
