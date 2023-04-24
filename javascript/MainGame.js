@@ -1,21 +1,28 @@
 // * Here we create the general class for the main game:
 class MainGame {
     // * Add main game's properties (all main game's elements):
-    constructor() {
+    constructor(isNormalGame) {
         // * In this constructor we have all the initial elements and values of the main game.
         // The background:
         this.background = new Image();
         this.background.src = "images/blue-sky1.jpg";
 
+        // Let's create a variable to decide if the game is normal or offroad:
+        this.isNormalGame = isNormalGame;
         // Create a new Road object:
         // This is a different road from the following ones, this is the first road show already when the game starts:
-        this.firstRoad = new Road(0, true);
+        if (this.isNormalGame) {
+            this.firstRoad = new Road(0, true);
+        } else {
+            this.firstRoad = new Road(0, false);
+        }
+
         // Create an array of new road sets:
         this.roadArr = [];
 
         // Create a new Sprite Object: //* TEST for one sprite.
         // First we define a variable to define if we want cars/blocks or rocks:
-        this.isCarSprite = true;
+        this.isCarSprite = isNormalGame;
         // Now we do a conditional to get back the object depending on the sprite:
         // this.sprite;
         // if (isCarSprite) {
@@ -43,7 +50,12 @@ class MainGame {
         ) {
             // console.log("Running roadKeepsMovingDown"); //* TEST
             // Let's create more road sets but starting before the first road:
-            let newRoadSet = new Road(-canvas.height, true);
+            let newRoadSet;
+            if (this.isNormalGame) {
+                newRoadSet = new Road(-canvas.height, true);
+            } else {
+                newRoadSet = new Road(-canvas.height, false);
+            }
             this.roadArr.push(newRoadSet);
         }
         // Check that the array is adding and removing elements correctly:
@@ -143,10 +155,10 @@ class MainGame {
             eachRoad.draw();
         });
         this.drawBackground();
+        this.rider.draw();
         this.spritesArr.forEach((eachSprite) => {
             eachSprite.draw();
         });
-        this.rider.draw();
 
         // * 4. Recursion (requestAnimationFrame)
         // Only run this if isGameOn is true:

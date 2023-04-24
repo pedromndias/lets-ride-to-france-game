@@ -14,27 +14,31 @@ const exitBtn = document.querySelector("#exit-btn");
 const startOffroadBtn = document.querySelector("#start-offroad-btn");
 // Canvas:
 const canvas = document.querySelector("#main-canvas");
-// ? const canvasOffroad = document.querySelector("#offroad-canvas");
+// Note that we will use the same canvas for both roads (normal and offroad).
 
 // Create the canvas variables:
 const ctx = canvas.getContext("2d");
-// ? const ctxOffroad = canvasOffroad.getContext("2d");
 
 // Create a general game object (to be accessed by other functions, event listeners, etc..):
 let mainGameObj;
-// ? let offroadGameObj;
 
 // * STATE MANAGEMENT FUNCTIONS
 
 // Create a function to start the main game:
-const startMainGame = () => {
+// Note the functions parameter that will come from the event listeners, and will render either the normal or the off road.
+const startMainGame = (isNormalGame) => {
     console.log("Starting main game!");
     // * 1. Change the game screens:
     startScreen.style.display = "none";
     canvas.style.display = "block";
 
     // * 2. Create game elements:
-    mainGameObj = new MainGame();
+    // If isNormalGame, we will send "true" as an argument to create the new object:
+    if (isNormalGame) {
+        mainGameObj = new MainGame(true);
+    } else {
+        mainGameObj = new MainGame(false);
+    }
     // console.log(mainGameObj); //* TEST
 
     // * 3. Start the game loop (recursion):
@@ -42,22 +46,6 @@ const startMainGame = () => {
     mainGameObj.gameLoop();
 };
 
-// ? const startOffroadGame = () => {
-//     console.log("Starting offroad game!");
-//     // * 1. Change the game screens:
-//     winScreen.style.display = "none";
-//     canvasOffroad.style.display = "block";
-
-//     // * 2. Create game elements:
-//     offroadGameObj = new OffroadGame();
-//     console.log(offroadGameObj);
-
-//     // * 3. Start the game loop (recursion):
-//     // Access the method from the new obejct:
-//     offroadGameObj.gameLoop();
-// }
-
-// ? startOffroadGame(); // ! Must be inside an event listener! will run before OffroadGame is created.
 
 // Create a function to be called by the keydown event listener and change the rider's direction:
 const changeRidersDirKeyDown = (event) => {
@@ -106,10 +94,15 @@ const changeRidersDirKeyUp = (event) => {
 // * ADD EVENT LISTENERS
 
 // Create an event listener fot the startMainGameBtn to execute startMainGame function:
-startMainGameBtn.addEventListener("click", startMainGame);
-
-// ? Create an event listener fot the startOffroadGameBtn to execute startOffroadGame function:
-// ? startOffroadBtn.addEventListener("click", startOffroadGame);
+startMainGameBtn.addEventListener("click", () => {
+    startMainGame(true);
+})
+// Note the boolean argument sent in the function, so we can render the normal road or the offroad set.
+// Create an event listener fot the startOffroadGameBtn to execute startOffroadGame function:
+startOffroadBtn.addEventListener("click", () => {
+    console.log("Going off road");
+    startMainGame(false);
+})
 
 // Let's create a keydown event listener to control the rider, it will call the changeRidersDirection function:
 window.addEventListener("keydown", (event) => {

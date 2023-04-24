@@ -17,9 +17,9 @@ class Rider {
             up: new Image(),
         };
         // The rider's image will change depending if it riding straight, left or right:
-        this.imagesObj.left.src = "images/moto1-left.png";
-        this.imagesObj.right.src = "images/moto1-right.png";
-        this.imagesObj.up.src = "images/moto1.png";
+        this.imagesObj.left.src = "images/moto-left.png";
+        this.imagesObj.right.src = "images/moto-right.png";
+        this.imagesObj.up.src = "images/moto.png";
         // Due to optimization, let's create variable of those images:
         this.imageLeft = this.imagesObj.left;
         this.imageRight = this.imagesObj.right;

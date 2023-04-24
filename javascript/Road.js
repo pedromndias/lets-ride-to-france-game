@@ -2,6 +2,7 @@
 class Road {
     // * Add road's properties:
     constructor(positionY, isNormalGame) {
+        
         // Road's image (will depend of the variables so we see road or offroad):
         this.img = new Image();
         if (isNormalGame) {

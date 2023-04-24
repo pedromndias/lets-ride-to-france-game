@@ -14,8 +14,7 @@ body {
 
 #main-canvas,
 #gameover-screen,
-#win-screen,
-#offroad-canvas,
+/* #win-screen, */
 #thankyou-screen {
     display: none;
 }
