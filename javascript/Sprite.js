@@ -35,7 +35,7 @@ class Sprite {
         let randomNumX = 0;
         // todo We will create a setInterval so the sprite Speed goes up (every 10 seconds)
 
-        // The road blocks should move as fast as the road and should only be on the side left lane (120px):
+        // The road blocks should move as fast as the road and should only be on the side left lane (130px):
         if (sprite === "car") {
             if (randomNumImage === 8) {
                 spriteSpeed = 4;
@@ -44,25 +44,30 @@ class Sprite {
                 this.h = 80;
             } else {
                 spriteSpeed = 2;
-                randomNumX = Math.floor(Math.random() * 4) * 88 + 120;
+                randomNumX = Math.floor(Math.random() * 4) * 92 + 130;
                 if (randomNumImage === 9 || randomNumImage === 10) {
-                    this.w = 80;
-                    this.h = 120;
+                    // Motorcycles dimensions:
+                    this.w = 50;
+                    this.h = 80;
+                } else if (randomNumImage === 4) {
+                    // Bus dimensions:
+                    this.w = 70;
+                    this.h = 230;
                 } else {
-                    this.w = 100;
-                    this.h = 150;
+                    this.w = 70;
+                    this.h = 120;
                 }
             }
             this.y = 140;
         } else {
-            console.log("Will draw rock sprites")
+            // console.log("Will draw rock sprites"); // * TEST
             randomNumX = Math.floor(Math.random() * 4) * 88 + 120;
 
             // If the randomNumImage is 2, we will render a motorcycle wich is smaller than the other sprites:
             if (randomNumImage === 2) {
                 spriteSpeed = 2;
-                this.w = 80;
-                this.h = 120;
+                this.w = 50;
+                this.h = 80;
                 this.y = 140;
             }
             // If the randomNumImage is 3, we will render our X-Wing faster then the road (and it will move also on the X axis):

@@ -25,10 +25,14 @@ class Rider {
         this.imageRight = this.imagesObj.right;
         this.imageUp = this.imagesObj.up;
 
+        // Let's create an image in case there is a crash:
+        this.imageCrash = new Image();
+        this.imageCrash.src = "images/motorcycle-crash.png";
+
         this.x = canvas.width / 2;
         this.y = canvas.height - 100;
-        this.w = 80;
-        this.h = 120;
+        this.w = 50;
+        this.h = 70;
         // Create a variable for the rider's movement:
         this.moveSpeed = 4;
     }
@@ -60,4 +64,9 @@ class Rider {
             this.y += this.moveSpeed;
         }
     };
+    
+    // Create a crash method so the image changes:
+    crash = () => {
+        ctx.drawImage(this.imageCrash, this.x, this.y, this.w, this.h);
+    }
 }

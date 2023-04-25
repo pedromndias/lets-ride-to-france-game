@@ -18,7 +18,7 @@ class MainGame {
         }
 
         // Create an empty array in case we are playing offroad:
-        if(!this.isNormalGame) {
+        if (!this.isNormalGame) {
             this.barrierArr = [];
         }
 
@@ -102,7 +102,10 @@ class MainGame {
     // Let's make a function to show the barriers on the offroad game:
     showBarriers = () => {
         // If the barrierArr is empty or if the last one did reach 0px on the Y axis of the screen, we create a new barrierArr:
-        if (this.barrierArr.length === 0 || this.barrierArr[this.barrierArr.length-1].y > 0) {
+        if (
+            this.barrierArr.length === 0 ||
+            this.barrierArr[this.barrierArr.length - 1].y > 0
+        ) {
             let newBarrierLeft = new Barrier("left");
             // And then we push it to the array:
             this.barrierArr.push(newBarrierLeft);
@@ -111,13 +114,58 @@ class MainGame {
             // And then we also push it to the array:
             this.barrierArr.push(newBarrierRight);
         }
-    }
+    };
 
     // Like the road and sprites, we should remove the barriers from the array:
     removeBarrier = () => {
         if (this.barrierArr[0].y > canvas.height) {
             this.barrierArr.shift();
         }
+    };
+
+
+    // Let's create a function that checks if the rider collides with a sprite:
+    checkRiderSpriteCollision = () => {
+        // We will use a forEach to check the collision on each sprite (besides X-Wing):
+        this.spritesArr.forEach((eachSprite) => {
+            // We can check the collision with a "2D collision detection" system (taken from MDN):
+            if (eachSprite.isXWing === false) {
+                if (
+                    eachSprite.x < this.rider.x + this.rider.w &&
+                    eachSprite.x + eachSprite.w > this.rider.x &&
+                    eachSprite.y < this.rider.y + this.rider.h &&
+                    eachSprite.h + eachSprite.y > this.rider.y
+                  ) {
+                    console.log("Collision detected!"); // * TEST
+                    // Change the rider's image to the crash image:
+                    this.rider.crash();
+                    // If there is a collision, we will call gameover:
+                    setTimeout(() => {
+                        this.gameOver();
+                    },1000)
+                    
+                  }
+            }
+        })
+    }
+
+    // Let's create a function to check if the rider collides with the barriers on the offroad game:
+    checkRiderBarrierCollision = () => {
+        this.barrierArr.forEach((eachBarrier) => {
+            // We will use the same system as with the barriers:
+            if (
+                eachBarrier.x < this.rider.x + this.rider.w &&
+                eachBarrier.x + eachBarrier.w > this.rider.x &&
+                eachBarrier.y < this.rider.y + this.rider.h &&
+                eachBarrier.h + eachBarrier.y > this.rider.y
+              ) {
+                console.log("Collision against a barrier!"); // * TEST
+                // Change the rider's image to the crash image:
+                this.rider.crash();
+                // If there is a collision, we will call gameover:
+                this.gameOver();
+              }
+        })
     }
 
     // Create a function to end the game:
@@ -126,10 +174,11 @@ class MainGame {
         this.isGameOn = false;
 
         // 2. Hide the canvas:
-        canvas.style.display = "none";
-
+            canvas.style.display = "none";
+        
         // 3. Show final screen:
-        gameoverScreen.style.display = "flex";
+            gameoverScreen.style.display = "block";
+        
     };
 
     // Create a function to draw the background:
@@ -176,25 +225,31 @@ class MainGame {
         this.rider.moveRider();
 
         // If it is offroad, let's move the barriers:
-        if(!this.isNormalGame) {
+        if (!this.isNormalGame) {
             this.barrierArr.forEach((eachBarrier) => {
                 eachBarrier.move();
             });
+            // Show the barriers:
+            this.showBarriers();
+            // And remove the barriers from the array:
+            this.removeBarrier();
         }
 
-        // Show the barriers:
-        this.showBarriers();
+        // Check if there is a collision between the rider and the sprites:
+        this.checkRiderSpriteCollision();
 
-        // And remove the barriers from the array:
-        this.removeBarrier();
-
+        // If it is offroad, let's also check for colisions with the barriers:
+        if (!this.isNormalGame) {
+            this.checkRiderBarrierCollision();
+        }
+        
         // * 3. Elements' drawing on canvas:
         this.firstRoad.draw();
         this.roadArr.forEach((eachRoad) => {
             eachRoad.draw();
         });
         // If it is offroad, let's show the barriers:
-        if(!this.isNormalGame) {
+        if (!this.isNormalGame) {
             this.barrierArr.forEach((eachBarrier) => {
                 eachBarrier.draw();
             });
@@ -204,7 +259,6 @@ class MainGame {
         this.spritesArr.forEach((eachSprite) => {
             eachSprite.draw();
         });
-        
 
         // * 4. Recursion (requestAnimationFrame)
         // Only run this if isGameOn is true:
