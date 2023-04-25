@@ -53,6 +53,7 @@ class Sprite {
                     this.h = 150;
                 }
             }
+            this.y = 140;
         } else {
             console.log("Will draw rock sprites")
             randomNumX = Math.floor(Math.random() * 4) * 88 + 120;

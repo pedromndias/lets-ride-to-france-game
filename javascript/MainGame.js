@@ -17,6 +17,11 @@ class MainGame {
             this.firstRoad = new Road(0, false);
         }
 
+        // Create an empty array in case we are playing offroad:
+        if(!this.isNormalGame) {
+            this.barrierArr = [];
+        }
+
         // Create an array of new road sets:
         this.roadArr = [];
 
@@ -94,6 +99,27 @@ class MainGame {
         }
     };
 
+    // Let's make a function to show the barriers on the offroad game:
+    showBarriers = () => {
+        // If the barrierArr is empty or if the last one did reach 0px on the Y axis of the screen, we create a new barrierArr:
+        if (this.barrierArr.length === 0 || this.barrierArr[this.barrierArr.length-1].y > 0) {
+            let newBarrierLeft = new Barrier("left");
+            // And then we push it to the array:
+            this.barrierArr.push(newBarrierLeft);
+            // And we have to repeat the process for the right barrier:
+            let newBarrierRight = new Barrier("right");
+            // And then we also push it to the array:
+            this.barrierArr.push(newBarrierRight);
+        }
+    }
+
+    // Like the road and sprites, we should remove the barriers from the array:
+    removeBarrier = () => {
+        if (this.barrierArr[0].y > canvas.height) {
+            this.barrierArr.shift();
+        }
+    }
+
     // Create a function to end the game:
     gameOver = () => {
         // 1. Stop de game:
@@ -149,16 +175,36 @@ class MainGame {
         // Make the rider move:
         this.rider.moveRider();
 
+        // If it is offroad, let's move the barriers:
+        if(!this.isNormalGame) {
+            this.barrierArr.forEach((eachBarrier) => {
+                eachBarrier.move();
+            });
+        }
+
+        // Show the barriers:
+        this.showBarriers();
+
+        // And remove the barriers from the array:
+        this.removeBarrier();
+
         // * 3. Elements' drawing on canvas:
         this.firstRoad.draw();
         this.roadArr.forEach((eachRoad) => {
             eachRoad.draw();
         });
+        // If it is offroad, let's show the barriers:
+        if(!this.isNormalGame) {
+            this.barrierArr.forEach((eachBarrier) => {
+                eachBarrier.draw();
+            });
+        }
         this.drawBackground();
         this.rider.draw();
         this.spritesArr.forEach((eachSprite) => {
             eachSprite.draw();
         });
+        
 
         // * 4. Recursion (requestAnimationFrame)
         // Only run this if isGameOn is true:
