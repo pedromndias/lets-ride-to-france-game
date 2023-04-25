@@ -15,7 +15,9 @@ body {
 #main-canvas,
 #gameover-screen,
 #win-screen,
-#thankyou-screen {
+#thankyou-screen,
+#pause-btn,
+#play-btn {
     display: none;
 }
 

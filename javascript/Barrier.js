@@ -9,7 +9,7 @@ class Barrier {
             this.x = 70;
         } else if (direction === "right") {
             this.img.src = "images/sprite-barrier-right.png";
-            this.x = canvas.width - 70;
+            this.x = canvas.width - 83;
         }
 
         

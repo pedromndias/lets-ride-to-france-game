@@ -3,9 +3,7 @@ class MainGame {
     // * Add main game's properties (all main game's elements):
     constructor(isNormalGame) {
         // * In this constructor we have all the initial elements and values of the main game.
-        // The background:
-        this.background = new Image();
-        this.background.src = "images/blue-sky1.jpg";
+        
 
         // Let's create a variable to decide if the game is normal or offroad:
         this.isNormalGame = isNormalGame;
@@ -17,22 +15,26 @@ class MainGame {
             this.firstRoad = new Road(0, false);
         }
 
+        // Create an array of new road sets:
+        this.roadArr = [];
+
         // Create an empty array in case we are playing offroad:
         if (!this.isNormalGame) {
             this.barrierArr = [];
         }
 
-        // Create an array of new road sets:
-        this.roadArr = [];
+        // The background:
+        this.background = new Image();
+        if (this.isNormalGame) {
+            this.background.src = "images/cover-sagrada-01.png";
+        } else {
+            this.background.src = "images/tatooine-05.png";
+        }
 
         // Create a new Sprite Object: //* TEST for one sprite.
         // First we define a variable to define if we want cars/blocks or rocks:
         this.isCarSprite = isNormalGame;
-        // Now we do a conditional to get back the object depending on the sprite:
-        // this.sprite;
-        // if (isCarSprite) {
-        //     this.sprite = new Sprite("car");
-        // }
+
         //  An array to store the multiple sprites:
         this.spritesArr = [];
 
@@ -41,6 +43,11 @@ class MainGame {
 
         // Let's create a variabel to check is the game is on:
         this.isGameOn = true;
+
+        // Create variable to check how many km are left until the finish of the game:
+        this.km = 400;
+        // Create a variable to check how many cars we have passed:
+        this.score = 0;
     }
 
     // * Add the main game's methods (all main game's actions):
@@ -96,6 +103,7 @@ class MainGame {
     removeSprite = () => {
         if (this.spritesArr[0].y > canvas.height) {
             this.spritesArr.shift();
+            this.score++;
         }
     };
 
@@ -123,7 +131,6 @@ class MainGame {
         }
     };
 
-
     // Let's create a function that checks if the rider collides with a sprite:
     checkRiderSpriteCollision = () => {
         // We will use a forEach to check the collision on each sprite (besides X-Wing):
@@ -136,9 +143,9 @@ class MainGame {
                     eachSprite.y < this.rider.y + this.rider.h &&
                     eachSprite.h + eachSprite.y > this.rider.y
                   ) {
-                    console.log("Collision detected!"); // * TEST
+                    // console.log("Collision detected!"); // * TEST
                     // Change the rider's image to the crash image:
-                    this.rider.crash();
+                    this.rider.hasCrashed = true;
                     // If there is a collision, we will call gameover:
                     setTimeout(() => {
                         this.gameOver();
@@ -159,11 +166,13 @@ class MainGame {
                 eachBarrier.y < this.rider.y + this.rider.h &&
                 eachBarrier.h + eachBarrier.y > this.rider.y
               ) {
-                console.log("Collision against a barrier!"); // * TEST
+                // console.log("Collision against a barrier!"); // * TEST
                 // Change the rider's image to the crash image:
-                this.rider.crash();
+                this.rider.hasCrashed = true;
                 // If there is a collision, we will call gameover:
-                this.gameOver();
+                setTimeout(() => {
+                    this.gameOver();
+                },1000)
               }
         })
     }
@@ -174,10 +183,11 @@ class MainGame {
         this.isGameOn = false;
 
         // 2. Hide the canvas:
-            canvas.style.display = "none";
-        
+        canvas.style.display = "none";
+        pauseBtn.style.display = "none";
+        winScreen.style.display = "none";
         // 3. Show final screen:
-            gameoverScreen.style.display = "block";
+        gameoverScreen.style.display = "block";
         
     };
 
@@ -190,6 +200,57 @@ class MainGame {
     clearCanvas = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
+
+    // Create a function that will decrease the km left:
+    decreaseKm = () => {
+        this.km = (this.km - 0.1).toFixed(1);
+    }
+    
+    // Create a function to check the km and call some other functions:
+    checkKm = () => {
+        if (this.km < 100) {
+            if (this.isNormalGame) {
+                this.background.src = "images/cover-toulouse-02.png";
+            } else {
+                this.background.src = "images/tatooine-03.jpg"
+            }
+            
+        } else if (this.km < 250) {
+            if (this.isNormalGame) {
+                this.background.src = "images/cover-girona-02.png";
+            } else {
+                this.background.src = "images/tatooine-02.jpg"
+            }
+        }
+        if (this.km < 0) {
+            // console.log("0 Km"); // * TEST
+            this.win();
+        }
+    }
+    // Create a function that will draw the text on our canvas:
+    drawKm = () => {
+        let text = `You have ${this.km}km left to ride..`;
+        ctx.font = "20px serif";
+        ctx.fillText(text, 30, 30);
+    }
+
+    // Create a function to draw the score on our canvas:
+    drawScore = () => {
+        let text = `Score: ${this.score}`;
+        ctx.font = "20px serif";
+        ctx.fillText(text, canvas.width - 100, 30);
+    }
+
+    // Let's create a functin for when the player reaches the finish (wins):
+    win = () => {
+            // 1. Stop de game:
+            this.isGameOn = false;
+            // 2. Hide the canvas:
+            canvas.style.display = "none";
+            pauseBtn.style.display = "none";
+            // 3. Show win screen:
+            winScreen.style.display = "block";
+    }
 
     // Let's create the game's loop (recursion):
     gameLoop = () => {
@@ -242,6 +303,12 @@ class MainGame {
         if (!this.isNormalGame) {
             this.checkRiderBarrierCollision();
         }
+
+        // Call the function to decrease the km:
+        this.decreaseKm();
+
+        // Call the checkKm function:
+        this.checkKm();
         
         // * 3. Elements' drawing on canvas:
         this.firstRoad.draw();
@@ -255,10 +322,16 @@ class MainGame {
             });
         }
         this.drawBackground();
+
         this.rider.draw();
+        
         this.spritesArr.forEach((eachSprite) => {
             eachSprite.draw();
         });
+
+        this.drawKm();
+
+        this.drawScore();
 
         // * 4. Recursion (requestAnimationFrame)
         // Only run this if isGameOn is true:

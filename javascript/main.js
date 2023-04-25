@@ -12,7 +12,12 @@ const gameoverRestartBtn = document.querySelector("#game-over-restart-btn");
 const backToStartBtn = document.querySelector("#back-to-start-btn");
 const exitBtn = document.querySelector("#exit-btn");
 const startOffroadBtn = document.querySelector("#start-offroad-btn");
-const gameoverStartOffroadBtn = document.querySelector("#game-over-offroad-btn");
+const gameoverStartOffroadBtn = document.querySelector(
+    "#game-over-offroad-btn"
+);
+const pauseBtn = document.querySelector("#pause-btn");
+const playBtn = document.querySelector("#play-btn");
+
 // Canvas:
 const canvas = document.querySelector("#main-canvas");
 // Note that we will use the same canvas for both roads (normal and offroad).
@@ -28,11 +33,13 @@ let mainGameObj;
 // Create a function to start the main game:
 // Note the functions parameter that will come from the event listeners, and will render either the normal or the off road.
 const startMainGame = (isNormalGame) => {
-    console.log("Starting main game!");
+    // console.log("Starting the game!"); // * TEST
     // * 1. Change the game screens:
+    winScreen.style.display = "none";
     startScreen.style.display = "none";
     gameoverScreen.style.display = "none";
     canvas.style.display = "block";
+    pauseBtn.style.display = "inline-block";
 
     // * 2. Create game elements:
     // If isNormalGame, we will send "true" as an argument to create the new object:
@@ -48,14 +55,11 @@ const startMainGame = (isNormalGame) => {
     mainGameObj.gameLoop();
 };
 
-
 // Create a function to be called by the keydown event listener and change the rider's direction:
 const changeRidersDirKeyDown = (event) => {
     // Note the "event" as an parameter of the function, so we can access its properties (like the key code, etc). This should run only if the object is created.
     // Note how we access the new game object and its rider object and its methods:
     if (mainGameObj !== undefined) {
-        // TODO If no key is pressed, show straight line image?
-
         // When pressing the keys, this will change the boolean values of the Rider's object riderDirectionObj to true:
         if (event.code === "ArrowLeft") {
             // console.log("moving left"); //* TEST
@@ -98,27 +102,51 @@ const changeRidersDirKeyUp = (event) => {
 // Create an event listener fot the startMainGameBtn to execute startMainGame function:
 startMainGameBtn.addEventListener("click", () => {
     startMainGame(true);
-})
+});
 // Note the boolean argument sent in the function, so we can render the normal road or the offroad set.
 // Create an event listener fot the startOffroadGameBtn to execute startOffroadGame function:
 startOffroadBtn.addEventListener("click", () => {
     console.log("Going off road");
     startMainGame(false);
-})
+});
 // We can also create an event listener to reset the game on the game over section:
 gameoverRestartBtn.addEventListener("click", () => {
     console.log("Game restarted after gameover");
     startMainGame(true);
-})
+});
 // And one if the player wants to play again:
 backToStartBtn.addEventListener("click", () => {
     console.log("Game restarted after arriving in France");
     startMainGame(true);
-})
+});
 // And also another event in case it's gameover and the player wants to go offroad:
 gameoverStartOffroadBtn.addEventListener("click", () => {
     console.log("Going offroad after gameover");
     startMainGame(false);
+});
+
+// Let's create an event listener for the pause button:
+pauseBtn.addEventListener("click", () => {
+    if(mainGameObj !== undefined && mainGameObj.isGameOn === true) {
+        mainGameObj.isGameOn = false;
+        playBtn.style.display = "inline-block";
+        pauseBtn.style.display = "none";
+    }
+})
+
+// Let's create an event listener for the play button:
+playBtn.addEventListener("click", () => {
+        mainGameObj.isGameOn = true;
+        // We need to call again the gameLoop when pressing the play button, not only change the value of isGameOn:
+        mainGameObj.gameLoop();
+        pauseBtn.style.display = "inline-block";
+        playBtn.style.display = "none";
+})
+
+// If the player presses the "Exit" button, it will go back to the first screen of the game:
+exitBtn.addEventListener("click", () => {
+    startScreen.style.display = "block";
+    winScreen.style.display = "none";
 })
 
 // Let's create a keydown event listener to control the rider, it will call the changeRidersDirection function:

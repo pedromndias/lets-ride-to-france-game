@@ -29,6 +29,9 @@ class Rider {
         this.imageCrash = new Image();
         this.imageCrash.src = "images/motorcycle-crash.png";
 
+        // Let's create a variable to see if the rider has crashed (to change the image):
+        this.hasCrashed = false;
+
         this.x = canvas.width / 2;
         this.y = canvas.height - 100;
         this.w = 50;
@@ -40,7 +43,16 @@ class Rider {
     // * Add rider's methods:
     // Draw the rider:
     draw = () => {
-        if (this.riderDirectionObj.left) {
+        // Note the conditionals so it renders a specific image depending on our booleans.
+        if (this.hasCrashed) {
+            ctx.drawImage(
+                this.imageCrash,
+                this.x,
+                this.y,
+                this.w + 10,
+                this.h + 10
+            );
+        } else if (this.riderDirectionObj.left) {
             ctx.drawImage(this.imageLeft, this.x, this.y, this.w, this.h);
         } else if (this.riderDirectionObj.right) {
             ctx.drawImage(this.imageRight, this.x, this.y, this.w, this.h);
@@ -51,22 +63,26 @@ class Rider {
 
     // Move rider in different directions:
     moveRider = () => {
-        if (this.riderDirectionObj.left) {
-            this.x -= this.moveSpeed;
-        }
-        if (this.riderDirectionObj.right) {
-            this.x += this.moveSpeed;
-        }
-        if (this.riderDirectionObj.up) {
-            this.y -= this.moveSpeed;
-        }
-        if (this.riderDirectionObj.down) {
+        // The rider should not move over the road sides (aprox at 90px and canvas.width-135px on the X axis) and not over and under the road's Y position:
+        if (!this.hasCrashed) {
+            if (this.x > 90 && this.riderDirectionObj.left) {
+                this.x -= this.moveSpeed;
+            }
+            if (this.x < canvas.width - 135 && this.riderDirectionObj.right) {
+                this.x += this.moveSpeed;
+            }
+            if (this.y > 190 && this.riderDirectionObj.up) {
+                this.y -= this.moveSpeed;
+            }
+            if (
+                this.y + this.h < canvas.height &&
+                this.riderDirectionObj.down
+            ) {
+                this.y += this.moveSpeed;
+            }
+        } else {
+            // In case the rider crashes, it will move on the same speed as the road:
             this.y += this.moveSpeed;
         }
     };
-    
-    // Create a crash method so the image changes:
-    crash = () => {
-        ctx.drawImage(this.imageCrash, this.x, this.y, this.w, this.h);
-    }
 }
