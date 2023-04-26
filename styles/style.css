@@ -2,6 +2,7 @@ body {
     margin: 0;
     background-color: rgb(255, 250, 206);
     text-align: center;
+    font-family: "Inter";
 }
 
 .container {
@@ -10,6 +11,55 @@ body {
     justify-content: center;
     align-items: center;
     margin: 50px;
+}
+
+
+img {
+    width: 600px;
+}
+#thankyou-screen-down-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 140px;
+}
+#thankyou-screen-down-container a {
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    color:darkcyan;
+    background-color: rgb(165, 210, 30);
+    padding: 10px;
+    border: 1px solid darkcyan;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+#thankyou-screen-down-container a:visited {
+    text-decoration: none;
+}
+#thankyou-screen-down-container a:hover {
+    color: rgb(165, 210, 30);
+    background-color: darkcyan;
+    border: 1px solid rgb(165, 210, 30);
+}
+
+.score-p {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+/* SCREENS */
+
+#start-screen,
+#gameover-screen,
+#win-screen,
+#offroad-win-screen,
+#thankyou-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #main-canvas,
@@ -22,36 +72,110 @@ body {
     display: none;
 }
 
-img {
-    width: 600px;
-}
-
-#start-screen {
+#gameover-screen-buttons,
+#win-screen-buttons,
+#offroad-win-screen-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
-#start-screen button {
-    width: 120px;
+#gameover-screen-buttons button,
+#win-screen-buttons button,
+#offroad-win-screen-buttons button {
+    margin-left: 20px;
+}
+
+
+/* BUTTONS */
+
+button {
+    width: 150px;
     height: 50px;
-    margin-top: 20px;
     font-size: 1em;
     border: 2px solid black;
     background-color: palegoldenrod;
     border-radius: 10px;
     cursor: pointer;
-
-    align-self: flex-end;
+    text-align: center;
+    padding: auto;
+    font-family: "Inter";
 }
 
-#start-screen button:hover,
-#start-screen button:focus
+#start-screen button {
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+button:hover,
+button:focus
  {
     background-color: rgb(108, 208, 241);
+}
+
+button:active {
+    background-color: rgb(66, 120, 220);
     font-weight: bold;
 }
 
-#start-screen button:active {
-    background-color: rgb(66, 120, 220);
-    font-weight: bold;
+#start-offroad-btn {
+    background-color:rgb(214, 61, 0);
+    color:blanchedalmond;
+}
+#start-offroad-btn:hover {
+    background-color: blanchedalmond;
+    color: rgb(214, 61, 0);
+}
+
+#back-to-start-btn {
+    background-color: mediumseagreen;
+    color: white;
+}
+#back-to-start-btn:hover {
+    background-color: white;
+    color: mediumseagreen;
+}
+
+#pause-btn,
+#play-btn {
+    margin-top: 20px;
+    width: 65px;
+}
+
+#pause-btn {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+#pause-btn:hover {
+    background-color: red;
+    color: white;
+}
+#play-btn {
+    background-color: mediumseagreen;
+    color: white;
+}
+#play-btn:hover {
+    background-color: rgba(4, 255, 117, 0.5);
+    color: black;
+}
+
+#game-over-offroad-btn,
+#back-to-offroad-btn {
+    background-color:rgb(214, 61, 0);
+    color:blanchedalmond;
+}
+#game-over-offroad-btn:hover,
+#back-to-offroad-btn:hover {
+    background-color: blanchedalmond;
+    color: rgb(214, 61, 0);
+}
+
+#game-over-restart-btn {
+    background-color: mediumseagreen;
+    color: white;
+}
+
+#game-over-restart-btn:hover {
+    background-color: white;
+    color: mediumseagreen;
 }

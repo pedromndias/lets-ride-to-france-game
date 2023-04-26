@@ -188,7 +188,9 @@ class MainGame {
         winScreen.style.display = "none";
         offroadWinScreen.style.display = "none";
         // 3. Show final screen:
-        gameoverScreen.style.display = "block";
+        gameoverScreen.style.display = "flex";
+        playBtn.style.display = "none";
+        pauseBtn.styel.display = "none";
         
     };
 
@@ -234,15 +236,15 @@ class MainGame {
     }
     // Create a function that will draw the text on our canvas:
     drawKm = () => {
-        let text = `You have ${this.km}km left to ride..`;
-        ctx.font = "20px serif";
-        ctx.fillText(text, 30, 30);
+        let text = `You have ${Math.trunc(this.km)}km left to ride..`;
+        ctx.font = "17px Inter";
+        ctx.fillText(text, 20, 30);
     }
 
     // Create a function to draw the score on our canvas:
     drawScore = () => {
         let text = `Score: ${this.score}`;
-        ctx.font = "20px serif";
+        ctx.font = "17px Inter";
         ctx.fillText(text, canvas.width - 100, 30);
     }
 

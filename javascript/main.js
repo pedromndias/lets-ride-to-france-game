@@ -13,12 +13,11 @@ const gameoverRestartBtn = document.querySelector("#game-over-restart-btn");
 const backToStartBtn = document.querySelector("#back-to-start-btn");
 const exitBtn = document.querySelector("#exit-btn");
 const startOffroadBtn = document.querySelector("#start-offroad-btn");
-const gameoverStartOffroadBtn = document.querySelector(
-    "#game-over-offroad-btn"
-);
+const gameoverStartOffroadBtn = document.querySelector("#game-over-offroad-btn");
 const offroadExitBtn = document.querySelector("#offroad-exit-btn");
 const thankyouExitBtn = document.querySelector("#thankyou-exit-btn");
 const gameoverExitBtn = document.querySelector("#game-over-exit");
+const offroadAgainBtn = document.querySelector("#back-to-offroad-btn");
 const pauseBtn = document.querySelector("#pause-btn");
 const playBtn = document.querySelector("#play-btn");
 // Scores:
@@ -47,6 +46,7 @@ const startMainGame = (isNormalGame) => {
     gameoverScreen.style.display = "none";
     canvas.style.display = "block";
     pauseBtn.style.display = "inline-block";
+    offroadWinScreen.style.display = "none";
 
     // * 2. Create game elements:
     // If isNormalGame, we will send "true" as an argument to create the new object:
@@ -159,7 +159,12 @@ exitBtn.addEventListener("click", () => {
 // If the player presses the "Exit" button after winning the offroad track, it will show the thankyouScreen:
 offroadExitBtn.addEventListener("click", () => {
     offroadWinScreen.style.display = "none";
-    thankyouScreen.style.display = "block";
+    thankyouScreen.style.display = "flex";
+})
+
+// In case the player wants to play the off-road track again:
+offroadAgainBtn.addEventListener("click", () => {
+    startMainGame(false);
 })
 
 // Let's create an event listener in case the player looses and wants to exit the gameoverScreen:
