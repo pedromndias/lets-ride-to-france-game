@@ -153,7 +153,7 @@ playBtn.addEventListener("click", () => {
 // If the player presses the "Exit" button, it will go back to the first screen of the game:
 exitBtn.addEventListener("click", () => {
     winScreen.style.display = "none";
-    startScreen.style.display = "block";
+    startScreen.style.display = "flex";
 })
 
 // If the player presses the "Exit" button after winning the offroad track, it will show the thankyouScreen:
@@ -165,13 +165,13 @@ offroadExitBtn.addEventListener("click", () => {
 // Let's create an event listener in case the player looses and wants to exit the gameoverScreen:
 gameoverExitBtn.addEventListener("click", () => {
     gameoverScreen.style.display = "none";
-    startScreen.style.display = "block";
+    startScreen.style.display = "flex";
 })
 
 // Let's create an event listener for when the player wants to exit the thankyouScreen:
 thankyouExitBtn.addEventListener("click", () => {
     thankyouScreen.style.display = "none";
-    startScreen.style.display = "block";
+    startScreen.style.display = "flex";
 })
 
 // Let's create a keydown event listener to control the rider, it will call the changeRidersDirection function:

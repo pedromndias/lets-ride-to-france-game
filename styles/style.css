@@ -22,3 +22,36 @@ body {
     display: none;
 }
 
+img {
+    width: 600px;
+}
+
+#start-screen {
+    display: flex;
+    flex-direction: column;
+}
+
+#start-screen button {
+    width: 120px;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 1em;
+    border: 2px solid black;
+    background-color: palegoldenrod;
+    border-radius: 10px;
+    cursor: pointer;
+
+    align-self: flex-end;
+}
+
+#start-screen button:hover,
+#start-screen button:focus
+ {
+    background-color: rgb(108, 208, 241);
+    font-weight: bold;
+}
+
+#start-screen button:active {
+    background-color: rgb(66, 120, 220);
+    font-weight: bold;
+}
