@@ -85,8 +85,8 @@ class Sprite {
                 this.y = 140;
             } else if (randomNumImage === 6) {
                 spriteSpeed = 4;
-                this.w = 150;
-                this.h = 100;
+                this.w = 130;
+                this.h = 90;
                 this.y = 140;
             } else if (randomNumImage === 7) {
                 spriteSpeed = 4;

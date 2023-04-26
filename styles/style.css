@@ -16,6 +16,7 @@ body {
 #gameover-screen,
 #win-screen,
 #thankyou-screen,
+#offroad-win-screen,
 #pause-btn,
 #play-btn {
     display: none;

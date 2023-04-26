@@ -5,7 +5,8 @@
 const startScreen = document.querySelector("#start-screen");
 const gameoverScreen = document.querySelector("#gameover-screen");
 const winScreen = document.querySelector("#win-screen");
-const thankYouScreen = document.querySelector("#thankyou-screen");
+const offroadWinScreen = document.querySelector("#offroad-win-screen");
+const thankyouScreen = document.querySelector("#thankyou-screen");
 // Buttons:
 const startMainGameBtn = document.querySelector("#start-main-game-btn");
 const gameoverRestartBtn = document.querySelector("#game-over-restart-btn");
@@ -15,8 +16,14 @@ const startOffroadBtn = document.querySelector("#start-offroad-btn");
 const gameoverStartOffroadBtn = document.querySelector(
     "#game-over-offroad-btn"
 );
+const offroadExitBtn = document.querySelector("#offroad-exit-btn");
+const thankyouExitBtn = document.querySelector("#thankyou-exit-btn");
+const gameoverExitBtn = document.querySelector("#game-over-exit");
 const pauseBtn = document.querySelector("#pause-btn");
 const playBtn = document.querySelector("#play-btn");
+// Scores:
+const scoreDOM = document.querySelector("#score");
+const offroadScoreDOM = document.querySelector("#offroad-score");
 
 // Canvas:
 const canvas = document.querySelector("#main-canvas");
@@ -145,8 +152,26 @@ playBtn.addEventListener("click", () => {
 
 // If the player presses the "Exit" button, it will go back to the first screen of the game:
 exitBtn.addEventListener("click", () => {
-    startScreen.style.display = "block";
     winScreen.style.display = "none";
+    startScreen.style.display = "block";
+})
+
+// If the player presses the "Exit" button after winning the offroad track, it will show the thankyouScreen:
+offroadExitBtn.addEventListener("click", () => {
+    offroadWinScreen.style.display = "none";
+    thankyouScreen.style.display = "block";
+})
+
+// Let's create an event listener in case the player looses and wants to exit the gameoverScreen:
+gameoverExitBtn.addEventListener("click", () => {
+    gameoverScreen.style.display = "none";
+    startScreen.style.display = "block";
+})
+
+// Let's create an event listener for when the player wants to exit the thankyouScreen:
+thankyouExitBtn.addEventListener("click", () => {
+    thankyouScreen.style.display = "none";
+    startScreen.style.display = "block";
 })
 
 // Let's create a keydown event listener to control the rider, it will call the changeRidersDirection function:

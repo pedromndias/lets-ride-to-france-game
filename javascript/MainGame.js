@@ -45,7 +45,7 @@ class MainGame {
         this.isGameOn = true;
 
         // Create variable to check how many km are left until the finish of the game:
-        this.km = 400;
+        this.km = 100;
         // Create a variable to check how many cars we have passed:
         this.score = 0;
     }
@@ -186,6 +186,7 @@ class MainGame {
         canvas.style.display = "none";
         pauseBtn.style.display = "none";
         winScreen.style.display = "none";
+        offroadWinScreen.style.display = "none";
         // 3. Show final screen:
         gameoverScreen.style.display = "block";
         
@@ -224,7 +225,11 @@ class MainGame {
         }
         if (this.km < 0) {
             // console.log("0 Km"); // * TEST
-            this.win();
+            if (this.isNormalGame) {
+                this.win();
+            } else {
+                this.offroadWin();
+            }
         }
     }
     // Create a function that will draw the text on our canvas:
@@ -243,13 +248,26 @@ class MainGame {
 
     // Let's create a functin for when the player reaches the finish (wins):
     win = () => {
-            // 1. Stop de game:
-            this.isGameOn = false;
-            // 2. Hide the canvas:
-            canvas.style.display = "none";
-            pauseBtn.style.display = "none";
-            // 3. Show win screen:
-            winScreen.style.display = "block";
+        // 1. Stop de game:
+        this.isGameOn = false;
+        // 2. Hide the canvas:
+        canvas.style.display = "none";
+        pauseBtn.style.display = "none";
+        // 3. Show win screen:
+        winScreen.style.display = "block";
+        scoreDOM.innerText = this.score;
+    }
+
+    // Let's create a function for when the player wins the offroad track:
+    offroadWin = () => {
+        // 1. Stop de game:
+        this.isGameOn = false;
+        // 2. Hide the canvas:
+        canvas.style.display = "none";
+        pauseBtn.style.display = "none";
+        // 3. Show win screen:
+        offroadWinScreen.style.display = "block";
+        offroadScoreDOM.innerText = this.score;
     }
 
     // Let's create the game's loop (recursion):
