@@ -13,7 +13,9 @@ const gameoverRestartBtn = document.querySelector("#game-over-restart-btn");
 const backToStartBtn = document.querySelector("#back-to-start-btn");
 const exitBtn = document.querySelector("#exit-btn");
 const startOffroadBtn = document.querySelector("#start-offroad-btn");
-const gameoverStartOffroadBtn = document.querySelector("#game-over-offroad-btn");
+const gameoverStartOffroadBtn = document.querySelector(
+    "#game-over-offroad-btn"
+);
 const offroadExitBtn = document.querySelector("#offroad-exit-btn");
 const thankyouExitBtn = document.querySelector("#thankyou-exit-btn");
 const gameoverExitBtn = document.querySelector("#game-over-exit");
@@ -48,10 +50,10 @@ const startMainGame = (isNormalGame) => {
     pauseBtn.style.display = "inline-block";
     offroadWinScreen.style.display = "none";
 
-    // Cancel the gameoverAudio and winingAudio:
+    // Cancel the gameoverAudio and winningAudio:
     if (mainGameObj !== undefined) {
         mainGameObj.gameoverAudio.pause();
-        mainGameObj.winingAudio.pause();
+        mainGameObj.winningAudio.pause();
     }
 
     // * 2. Create game elements:
@@ -142,23 +144,26 @@ gameoverStartOffroadBtn.addEventListener("click", () => {
 
 // Let's create an event listener for the pause button:
 pauseBtn.addEventListener("click", () => {
-    if(mainGameObj !== undefined && mainGameObj.isGameOn === true) {
+    if (mainGameObj !== undefined && mainGameObj.isGameOn === true) {
         mainGameObj.isGameOn = false;
         playBtn.style.display = "inline-block";
         pauseBtn.style.display = "none";
     }
     mainGameObj.gameAudio.pause();
-})
+    mainGameObj.busHorn.pause();
+    mainGameObj.tieFighterSound.pause();
+    mainGameObj.deloreanSound.pause();
+});
 
 // Let's create an event listener for the play button:
 playBtn.addEventListener("click", () => {
-        mainGameObj.isGameOn = true;
-        // We need to call again the gameLoop when pressing the play button, not only change the value of isGameOn:
-        mainGameObj.gameLoop();
-        pauseBtn.style.display = "inline-block";
-        playBtn.style.display = "none";
-        mainGameObj.gameAudio.play();
-})
+    mainGameObj.isGameOn = true;
+    // We need to call again the gameLoop when pressing the play button, not only change the value of isGameOn:
+    mainGameObj.gameLoop();
+    pauseBtn.style.display = "inline-block";
+    playBtn.style.display = "none";
+    mainGameObj.gameAudio.play();
+});
 
 // If the player presses the "Exit" button, it will go back to the first screen of the game:
 exitBtn.addEventListener("click", () => {
@@ -166,9 +171,9 @@ exitBtn.addEventListener("click", () => {
     startScreen.style.display = "flex";
     if (mainGameObj !== undefined) {
         mainGameObj.gameoverAudio.pause();
-        mainGameObj.winingAudio.pause();
+        mainGameObj.winningAudio.pause();
     }
-})
+});
 
 // If the player presses the "Exit" button after winning the offroad track, it will show the thankyouScreen:
 offroadExitBtn.addEventListener("click", () => {
@@ -176,14 +181,20 @@ offroadExitBtn.addEventListener("click", () => {
     thankyouScreen.style.display = "flex";
     if (mainGameObj !== undefined) {
         mainGameObj.gameoverAudio.pause();
-        mainGameObj.winingAudio.pause();
+        mainGameObj.winningAudio.pause();
     }
-})
+    mainGameObj.thankyouAudio.play();
+    mainGameObj.offroadWinningAudio.pause();
+});
 
 // In case the player wants to play the off-road track again:
 offroadAgainBtn.addEventListener("click", () => {
     startMainGame(false);
-})
+    if (mainGameObj !== undefined) {
+        mainGameObj.gameoverAudio.pause();
+        mainGameObj.winningAudio.pause();
+    }
+});
 
 // Let's create an event listener in case the player looses and wants to exit the gameoverScreen:
 gameoverExitBtn.addEventListener("click", () => {
@@ -191,19 +202,18 @@ gameoverExitBtn.addEventListener("click", () => {
     startScreen.style.display = "flex";
     if (mainGameObj !== undefined) {
         mainGameObj.gameoverAudio.pause();
-        mainGameObj.winingAudio.pause();
+        mainGameObj.winningAudio.pause();
     }
-})
+});
 
 // Let's create an event listener for when the player wants to exit the thankyouScreen:
 thankyouExitBtn.addEventListener("click", () => {
     thankyouScreen.style.display = "none";
     startScreen.style.display = "flex";
     if (mainGameObj !== undefined) {
-        mainGameObj.gameoverAudio.pause();
-        mainGameObj.winingAudio.pause();
+        mainGameObj.thankyouAudio.pause();
     }
-})
+});
 
 // Let's create a keydown event listener to control the rider, it will call the changeRidersDirection function:
 window.addEventListener("keydown", (event) => {

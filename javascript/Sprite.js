@@ -13,6 +13,14 @@ class Sprite {
         this.isXWing = false;
         // Let's create a variable to check if the sprite ir a rock/road block:
         this.isBlock;
+        // Create a variable to check if the sprite is a bus:
+        this.isBus;
+        // Create a variable to check is the sprite is a police car:
+        this.isPoliceCar;
+        // Let's create a variable to check if the sprite is a tie-fighter:
+        this.isTieFighter;
+        // Let's create a variable to check if the sprite is a delorean:
+        this.isDelorean;
 
         // Create audio for sprites:
         this.xWingSound = new Audio("audio/xwing-flying.mp3");
@@ -25,13 +33,8 @@ class Sprite {
         } else if (sprite === "rock") {
             // Since we have multiple rocks, we will create a random variable so we render different images:
             // console.log("Rock sprites coming.") // * TEST
-            randomNumImage = Math.floor(Math.random() * 7) + 1;
-            // If the randomNumImage is 7, we will render our dino GIF:
-            if (randomNumImage === 8) {
-                this.img.src = `images/rock-sprite-${randomNumImage}.gif`;
-            } else {
-                this.img.src = `images/rock-sprite-${randomNumImage}.png`;
-            }
+            randomNumImage = Math.floor(Math.random() * 8) + 1;
+            this.img.src = `images/rock-sprite-${randomNumImage}.png`;
         }
         // console.log(this.img.src); // * TEST
         // We also need a variable to randomly position the image on the X axis (120, 208, 296 or 384 pixels, which are the X position of the lanes of the vehicles):
@@ -56,8 +59,15 @@ class Sprite {
                 } else if (randomNumImage === 4) {
                     // Bus dimensions:
                     this.w = 70;
-                    this.h = 200;
-                } else {
+                    this.h = 160;
+                    this.isBus = true;
+                } else if (randomNumImage === 7) {
+                    // Police car:
+                    this.w = 70;
+                    this.h = 120;
+                    this.isPoliceCar = true;
+                }
+                else {
                     // Other vehicles:
                     this.w = 70;
                     this.h = 120;
@@ -79,40 +89,49 @@ class Sprite {
             else if (randomNumImage === 3) {
                 randomNumX = 0;
                 this.isXWing = true;
-                this.spriteSpeed += 6;
+                this.isBlock = true;
+                this.spriteSpeed = 10;
                 this.w = 300;
                 this.h = 300;
                 this.y = 0;
                 // Play xWing sound:
                 this.xWingSound.play();
-                this.xWingSound.volume = 0.3;
-            } 
+                this.xWingSound.volume = 0.1;
+            }
             // If the randomNumImage is 4 or 5, we will render our rocks as fast as the road:
             else if (randomNumImage === 4 || randomNumImage === 5) {
                 this.isBlock = true;
                 this.spriteSpeed = 4;
                 this.w = 80;
-                this.h = 120;
+                this.h = 100;
                 this.y = 140;
-            } else if (randomNumImage === 6) {
-                // For the landspeeder:
-                this.isBlock = true;
-                this.spriteSpeed = 4;
+            } 
+            else if (randomNumImage === 6) {
+                // For the tie-fighter:
+                this.isTieFighter = true;
+                this.spriteSpeed -= 2;
                 this.w = 130;
                 this.h = 90;
                 this.y = 140;
-            } else if (randomNumImage === 7) {
+            }
+             else if (randomNumImage === 7) {
                 // For the dino:
                 this.isBlock = true;
                 this.spriteSpeed = 4;
-                this.w = 130;
-                this.h = 130;
+                this.w = 90;
+                this.h = 100;
                 this.y = 140;
-            }
-            else {
+            } else if (randomNumImage === 8) {
+                // For the DeLorean:
                 this.spriteSpeed -= 2;
-                this.w = 100;
-                this.h = 150;
+                this.isDelorean = true;
+                this.w = 80;
+                this.h = 120;
+                this.y = 140;
+            } else {
+                this.spriteSpeed -= 2;
+                this.w = 80;
+                this.h = 120;
                 this.y = 140;
             }
         }
@@ -124,7 +143,6 @@ class Sprite {
     // Draw it:
     draw = () => {
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-        
     };
     // Move it torwards the bottom;
     move = () => {

@@ -3,6 +3,7 @@ body {
     background-color: rgb(255, 250, 206);
     text-align: center;
     font-family: "Inter";
+    box-sizing: border-box;
 }
 
 .container {
@@ -13,6 +14,9 @@ body {
     margin: 50px;
 }
 
+#main-canvas {
+    margin-top: 0;
+}
 
 img {
     width: 600px;

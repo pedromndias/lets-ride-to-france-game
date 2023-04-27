@@ -21,18 +21,41 @@ class MainGame {
         } else {
             this.gameAudio = new Audio("audio/star-wars-cantina-song.mp3")
         }
-        this.gameAudio.volume = 0.2;
+        this.gameAudio.volume = 0.05;
 
         // Create sound for crash:
         this.crashSound = new Audio("audio/wilhelm-scream.mp3");
-        this.crashSound.volume = 0.5;
+        this.crashSound.volume = 0.05;
         // Create audio for the gameover screen:
         this.gameoverAudio = new Audio("audio/game-over.mp3");
-        this.gameoverAudio.volume = 0.5;
-        // Create audio for the wining page:
-        this.winingAudio = new Audio("audio/french-national-anthem.mp3");
-        this.winingAudio.volume = 0.5;
-
+        this.gameoverAudio.volume = 0.05;
+        // Create audio for the winning page:
+        this.winningAudio = new Audio("audio/french-national-anthem.mp3");
+        this.winningAudio.volume = 0.1;
+        // Create audio for the offroad winning screen:
+        this.offroadWinningAudio = new Audio("audio/the-godfather.mp3");
+        this.offroadWinningAudio.volume = 0.05;
+        // Create audio for thankyou screen:
+        this.thankyouAudio = new Audio("audio/gladiator-song.mp3");
+        this.thankyouAudio.volume = 0.05;
+        // Create sound for when a sprite moves away from screen (score going up):
+        this.spriteOutSound = new Audio("audio/score-up.mp3");
+        this.spriteOutSound.volume = 0.05;
+        // Create a sound for car horn:
+        this.carHorn = new Audio("audio/car-horn-01.mp3");
+        this.carHorn.volume = 0.05;
+        // Create a sound for the bus horn:
+        this.busHorn = new Audio("audio/car-horn-02.mp3");
+        this.busHorn.volume = 0.1;
+        // Create a sound for the police car horn:
+        this.policeHorn = new Audio("audio/police-horn.mp3");
+        this.policeHorn.volume = 0.2;
+        // Create a sound for the ite-fighte:
+        this.tieFighterSound = new Audio("audio/tie-fighter-sound.mp3");
+        this.tieFighterSound.volume = 0.1;
+        // Create a sound for the Delorean:
+        this.deloreanSound = new Audio("audio/delorean-sound.mp3");
+        this.deloreanSound.volume = 0.1;
 
         // Create an array of new road sets:
         this.roadArr = [];
@@ -110,8 +133,20 @@ class MainGame {
             let newSprite;
             if (this.isCarSprite) {
                 newSprite = new Sprite("car");
+                // Sound horns depending on the new sprite:
+                if (newSprite.isBus) {
+                    this.busHorn.play();
+                } else if (newSprite.isPoliceCar) {
+                    this.policeHorn.play();
+                }
             } else {
                 newSprite = new Sprite("rock");
+                // Make sounds depeding on the sprite:
+                if (newSprite.isTieFighter) {
+                    this.tieFighterSound.play();
+                } else if (newSprite.isDelorean) {
+                    this.deloreanSound.play();
+                }
             }
             // Now we push the new sprite to the sprite's array:
             this.spritesArr.push(newSprite);
@@ -123,6 +158,7 @@ class MainGame {
         if (this.spritesArr[0].y > canvas.height) {
             this.spritesArr.shift();
             this.score++;
+            this.spriteOutSound.play();
         }
     };
 
@@ -168,9 +204,9 @@ class MainGame {
                 // Change the rider's image to the crash image:
                 this.rider.hasCrashed = true;
                 // If there is a collision, we will call gameover:
-                setTimeout(() => {
+                
                     this.gameOver();
-                }, 1000);
+                
                 // Play crash sound:
                 this.crashSound.play();
                 
@@ -193,9 +229,8 @@ class MainGame {
                 // Change the rider's image to the crash image:
                 this.rider.hasCrashed = true;
                 // If there is a collision, we will call gameover:
-                setTimeout(() => {
+                
                     this.gameOver();
-                }, 1000);
                 // Play crash sound:
                 this.crashSound.play();
             }
@@ -206,11 +241,16 @@ class MainGame {
     gameOver = () => {
         // 1. Stop de game:
         this.isGameOn = false;
-        // Stop track music:
+        this.busHorn.pause();
+        this.policeHorn.pause();
+        this.tieFighterSound.pause();
+        this.deloreanSound.pause();
+        setTimeout(() => {
+        {// Stop track music:
         this.gameAudio.pause();
         // Play game over music:
         this.gameoverAudio.play();
-        console.log("teminando el juego");
+        // console.log("Ending game"); //* TEST
 
         // 2. Hide the canvas:
         canvas.style.display = "none";
@@ -220,7 +260,8 @@ class MainGame {
         // 3. Show final screen:
         gameoverScreen.style.display = "flex";
         playBtn.style.display = "none";
-        pauseBtn.style.display = "none";
+        pauseBtn.style.display = "none";}
+    }, 1000);
     };
 
     // Create a function to draw the background:
@@ -243,7 +284,7 @@ class MainGame {
         // Depending on the km left, we will change the background and accelerate the elements to make it more difficult to reach the end:
         if (this.km < 100) {
             // Riders move speed change:
-            this.rider.moveSpeed = 9;
+            this.rider.moveSpeed = 10;
             // Speed of the non-block elements also change:
             this.spritesArr.forEach((eachSprite) => {
                 if (!eachSprite.isBlock) {
@@ -259,7 +300,7 @@ class MainGame {
             }
         } else if (this.km < 250) {
             // Riders move speed change:
-            this.rider.moveSpeed = 7;
+            this.rider.moveSpeed = 8;
             // Speed of the non-block elements also change:
             this.spritesArr.forEach((eachSprite) => {
                 if (!eachSprite.isBlock) {
@@ -304,8 +345,10 @@ class MainGame {
         this.isGameOn = false;
         // Stop track music:
         this.gameAudio.pause();
+        // Stop the sprites sounds:
+        this.busHorn.pause();
         // Play game over music:
-        this.winingAudio.play();
+        this.winningAudio.play();
 
         // 2. Hide the canvas:
         canvas.style.display = "none";
@@ -319,6 +362,13 @@ class MainGame {
     offroadWin = () => {
         // 1. Stop de game:
         this.isGameOn = false;
+        // Stop track music:
+        this.gameAudio.pause();
+        // Play game over music:
+        this.offroadWinningAudio.play();
+        // Stop the sprites sounds:
+        this.tieFighterSound.pause();
+        this.deloreanSound.pause();
         // 2. Hide the canvas:
         canvas.style.display = "none";
         pauseBtn.style.display = "none";
@@ -390,12 +440,12 @@ class MainGame {
             this.gameAudio.pause();
         }
 
-        // If the game is goin, we should stop the wining and gameover audios:
+        // If the game is goin, we should stop the winning and gameover audios:
         if(this.isGameOn) {
             this.gameoverAudio.pause();
             this.gameoverAudio.currentTime = 0;
-            this.winingAudio.pause();
-            this.winingAudio.currentTime = 0;
+            this.winningAudio.pause();
+            this.winningAudio.currentTime = 0;
         }
 
         // * 3. Elements' drawing on canvas:
