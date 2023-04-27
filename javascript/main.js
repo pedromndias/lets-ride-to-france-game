@@ -25,6 +25,12 @@ const playBtn = document.querySelector("#play-btn");
 // Scores:
 const scoreDOM = document.querySelector("#score");
 const offroadScoreDOM = document.querySelector("#offroad-score");
+const gameoverScoreDOM = document.querySelector("#gameover-score")
+
+const canvasContainer = document.querySelector("#canvas-container");
+const paragaphTextContainer = document.querySelector("#p-text-container");
+const kmToShowDOM = document.querySelector("#km-to-show");
+const scoreToShowDOM = document.querySelector("#score-to-show");
 
 // Canvas:
 const canvas = document.querySelector("#main-canvas");
@@ -36,6 +42,12 @@ const ctx = canvas.getContext("2d");
 // Create a general game object (to be accessed by other functions, event listeners, etc..):
 let mainGameObj;
 
+
+// Let's create a variable to check if the game is paused or not:
+let isPaused = false;
+// Let's create a function that lets us use the space:
+let canUseSpace = false;
+
 // * STATE MANAGEMENT FUNCTIONS
 
 // Create a function to start the main game:
@@ -46,7 +58,7 @@ const startMainGame = (isNormalGame) => {
     winScreen.style.display = "none";
     startScreen.style.display = "none";
     gameoverScreen.style.display = "none";
-    canvas.style.display = "block";
+    canvasContainer.style.display = "block";
     pauseBtn.style.display = "inline-block";
     offroadWinScreen.style.display = "none";
 
@@ -66,6 +78,11 @@ const startMainGame = (isNormalGame) => {
     // console.log(mainGameObj); //* TEST
     // Call the audio to play:
     mainGameObj.gameAudio.play();
+
+    // Change the variable isPause:
+    isPaused = false;
+    // Change the variable canUseSpace:
+    canUseSpace = true;
 
     // * 3. Start the game loop (recursion):
     // Access the method from the new obejct:
@@ -114,6 +131,36 @@ const changeRidersDirKeyUp = (event) => {
     }
 };
 
+// Create a function to pause the game:
+const pauseGameFunction = () => {
+    if (mainGameObj !== undefined && mainGameObj.isGameOn === true) {
+        mainGameObj.isGameOn = false;
+        playBtn.style.display = "inline-block";
+        pauseBtn.style.display = "none";
+    }
+    // Pause the game sounds:
+    mainGameObj.gameAudio.pause();
+    mainGameObj.busHorn.pause();
+    mainGameObj.tieFighterSound.pause();
+    mainGameObj.deloreanSound.pause();
+    mainGameObj.motorcycleSound.pause();
+    // Change the value of isPaused:
+    isPaused = true;
+}
+
+// Create a function to unpause the game:
+const unPauseGameFunction = () => {
+    mainGameObj.isGameOn = true;
+    // We need to call again the gameLoop when pressing the play button, not only change the value of isGameOn:
+    mainGameObj.gameLoop();
+    pauseBtn.style.display = "inline-block";
+    playBtn.style.display = "none";
+    mainGameObj.gameAudio.play();
+
+    // Change the value of isPaused:
+    isPaused = false;
+}
+
 // * ADD EVENT LISTENERS
 
 // Create an event listener fot the startMainGameBtn to execute startMainGame function:
@@ -144,25 +191,12 @@ gameoverStartOffroadBtn.addEventListener("click", () => {
 
 // Let's create an event listener for the pause button:
 pauseBtn.addEventListener("click", () => {
-    if (mainGameObj !== undefined && mainGameObj.isGameOn === true) {
-        mainGameObj.isGameOn = false;
-        playBtn.style.display = "inline-block";
-        pauseBtn.style.display = "none";
-    }
-    mainGameObj.gameAudio.pause();
-    mainGameObj.busHorn.pause();
-    mainGameObj.tieFighterSound.pause();
-    mainGameObj.deloreanSound.pause();
+    pauseGameFunction();
 });
 
 // Let's create an event listener for the play button:
 playBtn.addEventListener("click", () => {
-    mainGameObj.isGameOn = true;
-    // We need to call again the gameLoop when pressing the play button, not only change the value of isGameOn:
-    mainGameObj.gameLoop();
-    pauseBtn.style.display = "inline-block";
-    playBtn.style.display = "none";
-    mainGameObj.gameAudio.play();
+    unPauseGameFunction();
 });
 
 // If the player presses the "Exit" button, it will go back to the first screen of the game:
@@ -224,3 +258,13 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("keyup", (event) => {
     changeRidersDirKeyUp(event);
 });
+// Let's create a keydown event listener to also pause the game using the spacebar:
+window.addEventListener("keydown", (event) => {
+    if(canUseSpace && event.code === "Space"){
+        if (!isPaused) {
+            pauseGameFunction();
+        } else {
+            unPauseGameFunction();
+        }
+    }
+})

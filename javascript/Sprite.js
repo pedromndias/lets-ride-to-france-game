@@ -21,6 +21,8 @@ class Sprite {
         this.isTieFighter;
         // Let's create a variable to check if the sprite is a delorean:
         this.isDelorean;
+        // Let's create a variable to check if the sprite is a motorcycle:
+        this.isMotorcycle;
 
         // Create audio for sprites:
         this.xWingSound = new Audio("audio/xwing-flying.mp3");
@@ -54,6 +56,7 @@ class Sprite {
                 randomNumX = Math.floor(Math.random() * 4) * 92 + 130;
                 if (randomNumImage === 9 || randomNumImage === 10) {
                     // Motorcycles dimensions:
+                    this.isMotorcycle = true;
                     this.w = 50;
                     this.h = 80;
                 } else if (randomNumImage === 4) {
@@ -80,6 +83,7 @@ class Sprite {
 
             // If the randomNumImage is 2, we will render a motorcycle wich is smaller than the other sprites:
             if (randomNumImage === 2) {
+                this.isMotorcycle = true;
                 this.spriteSpeed -= 2;
                 this.w = 50;
                 this.h = 80;
@@ -102,24 +106,23 @@ class Sprite {
             else if (randomNumImage === 4 || randomNumImage === 5) {
                 this.isBlock = true;
                 this.spriteSpeed = 4;
-                this.w = 80;
-                this.h = 100;
+                this.w = 100;
+                this.h = 80;
                 this.y = 140;
             } 
             else if (randomNumImage === 6) {
                 // For the tie-fighter:
                 this.isTieFighter = true;
-                this.spriteSpeed -= 2;
-                this.w = 130;
-                this.h = 90;
+                this.spriteSpeed -= 3;
+                this.w = 120;
+                this.h = 110;
                 this.y = 140;
             }
              else if (randomNumImage === 7) {
-                // For the dino:
-                this.isBlock = true;
-                this.spriteSpeed = 4;
-                this.w = 90;
-                this.h = 100;
+                // For the batmobile:
+                this.spriteSpeed -= 2;
+                this.w = 80;
+                this.h = 120;
                 this.y = 140;
             } else if (randomNumImage === 8) {
                 // For the DeLorean:

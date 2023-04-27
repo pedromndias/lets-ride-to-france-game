@@ -17,27 +17,27 @@ class MainGame {
         // * AUDIO ELEMENTS:
         // Create an audio variable depending on the type of game:
         if (this.isNormalGame) {
-            this.gameAudio = new Audio("audio/on-the-road-again.mp3")
+            this.gameAudio = new Audio("audio/on-the-road-again.mp3");
         } else {
-            this.gameAudio = new Audio("audio/star-wars-cantina-song.mp3")
+            this.gameAudio = new Audio("audio/star-wars-cantina-song.mp3");
         }
-        this.gameAudio.volume = 0.05;
+        this.gameAudio.volume = 0.1;
 
         // Create sound for crash:
         this.crashSound = new Audio("audio/wilhelm-scream.mp3");
-        this.crashSound.volume = 0.05;
+        this.crashSound.volume = 0.1;
         // Create audio for the gameover screen:
         this.gameoverAudio = new Audio("audio/game-over.mp3");
-        this.gameoverAudio.volume = 0.05;
+        this.gameoverAudio.volume = 0.1;
         // Create audio for the winning page:
         this.winningAudio = new Audio("audio/french-national-anthem.mp3");
-        this.winningAudio.volume = 0.1;
+        this.winningAudio.volume = 0.2;
         // Create audio for the offroad winning screen:
         this.offroadWinningAudio = new Audio("audio/the-godfather.mp3");
-        this.offroadWinningAudio.volume = 0.05;
+        this.offroadWinningAudio.volume = 0.2;
         // Create audio for thankyou screen:
         this.thankyouAudio = new Audio("audio/gladiator-song.mp3");
-        this.thankyouAudio.volume = 0.05;
+        this.thankyouAudio.volume = 0.2;
         // Create sound for when a sprite moves away from screen (score going up):
         this.spriteOutSound = new Audio("audio/score-up.mp3");
         this.spriteOutSound.volume = 0.05;
@@ -56,6 +56,9 @@ class MainGame {
         // Create a sound for the Delorean:
         this.deloreanSound = new Audio("audio/delorean-sound.mp3");
         this.deloreanSound.volume = 0.1;
+        // Create a sound for the motorcyles:
+        this.motorcycleSound = new Audio("audio/motorcycle-sound.mp3");
+        this.motorcycleSound.volume = 0.1;
 
         // Create an array of new road sets:
         this.roadArr = [];
@@ -87,7 +90,7 @@ class MainGame {
         this.isGameOn = true;
 
         // Create variable to check how many km are left until the finish of the game:
-        this.km = 400;
+        this.km = 300;
         // Create a variable to check how many cars we have passed:
         this.score = 0;
     }
@@ -138,6 +141,8 @@ class MainGame {
                     this.busHorn.play();
                 } else if (newSprite.isPoliceCar) {
                     this.policeHorn.play();
+                } else if (newSprite.isMotorcycle) {
+                    this.motorcycleSound.play();
                 }
             } else {
                 newSprite = new Sprite("rock");
@@ -146,6 +151,8 @@ class MainGame {
                     this.tieFighterSound.play();
                 } else if (newSprite.isDelorean) {
                     this.deloreanSound.play();
+                } else if (newSprite.isMotorcycle) {
+                    this.motorcycleSound.play();
                 }
             }
             // Now we push the new sprite to the sprite's array:
@@ -204,12 +211,11 @@ class MainGame {
                 // Change the rider's image to the crash image:
                 this.rider.hasCrashed = true;
                 // If there is a collision, we will call gameover:
-                
-                    this.gameOver();
-                
+
+                this.gameOver();
+
                 // Play crash sound:
                 this.crashSound.play();
-                
             }
         });
     };
@@ -229,8 +235,8 @@ class MainGame {
                 // Change the rider's image to the crash image:
                 this.rider.hasCrashed = true;
                 // If there is a collision, we will call gameover:
-                
-                    this.gameOver();
+
+                this.gameOver();
                 // Play crash sound:
                 this.crashSound.play();
             }
@@ -245,28 +251,34 @@ class MainGame {
         this.policeHorn.pause();
         this.tieFighterSound.pause();
         this.deloreanSound.pause();
+        this.motorcycleSound.pause();
+        // There should be 1 second delay so we can hear the crashing sound and see the rider's new image:
         setTimeout(() => {
-        {// Stop track music:
-        this.gameAudio.pause();
-        // Play game over music:
-        this.gameoverAudio.play();
-        // console.log("Ending game"); //* TEST
+            // Stop track music:
+            this.gameAudio.pause();
+            // Play game over music:
+            this.gameoverAudio.play();
+            // console.log("Ending game"); //* TEST
+            // Do not allow to use space event:
+            canUseSpace = false;
 
-        // 2. Hide the canvas:
-        canvas.style.display = "none";
-        pauseBtn.style.display = "none";
-        winScreen.style.display = "none";
-        offroadWinScreen.style.display = "none";
-        // 3. Show final screen:
-        gameoverScreen.style.display = "flex";
-        playBtn.style.display = "none";
-        pauseBtn.style.display = "none";}
-    }, 1000);
+            // 2. Hide the canvas:
+            canvasContainer.style.display = "none";
+            pauseBtn.style.display = "none";
+            winScreen.style.display = "none";
+            offroadWinScreen.style.display = "none";
+            // 3. Show final screen:
+            gameoverScreen.style.display = "flex";
+            playBtn.style.display = "none";
+            pauseBtn.style.display = "none";
+            // Show gameover score:
+            gameoverScoreDOM.innerText = this.score;
+        }, 1000);
     };
 
     // Create a function to draw the background:
     drawBackground = () => {
-        ctx.drawImage(this.background, 0, 0, canvas.width, 200);
+        ctx.drawImage(this.background, 0, 0, canvas.width, 180);
     };
 
     // Create a function to clear the canvas:
@@ -290,10 +302,10 @@ class MainGame {
                 if (!eachSprite.isBlock) {
                     eachSprite.spriteSpeed = 8;
                 }
-            })
+            });
             if (this.isNormalGame) {
                 // Background change:
-                this.background.src = "images/cover-toulouse-02.png";
+                this.background.src = "images/cover-toulouse-06.png";
             } else {
                 // Background change:
                 this.background.src = "images/tatooine-03.jpg";
@@ -306,7 +318,7 @@ class MainGame {
                 if (!eachSprite.isBlock) {
                     eachSprite.spriteSpeed = 6;
                 }
-            })
+            });
             if (this.isNormalGame) {
                 // Background change:
                 this.background.src = "images/cover-girona-02.png";
@@ -314,7 +326,6 @@ class MainGame {
                 // Background change:
                 this.background.src = "images/tatooine-02.jpg";
             }
-            
         }
         if (this.km < 0) {
             // console.log("0 Km"); // * TEST
@@ -327,16 +338,18 @@ class MainGame {
     };
     // Create a function that will draw the text on our canvas:
     drawKm = () => {
-        let text = `You have ${Math.trunc(this.km)}km left to ride..`;
-        ctx.font = "17px Inter";
-        ctx.fillText(text, 20, 30);
+        // let text = `You have ${Math.trunc(this.km)}km left to ride..`;
+        // ctx.font = "17px Inter";
+        // ctx.fillText(text, 20, 30);
+        kmToShowDOM.innerText = Math.trunc(this.km);
     };
 
     // Create a function to draw the score on our canvas:
     drawScore = () => {
-        let text = `Score: ${this.score}`;
-        ctx.font = "17px Inter";
-        ctx.fillText(text, canvas.width - 100, 30);
+        // let text = `Score: ${this.score}`;
+        // ctx.font = "17px Inter";
+        // ctx.fillText(text, canvas.width - 100, 30);
+        scoreToShowDOM.innerText = this.score;
     };
 
     // Let's create a functin for when the player reaches the finish (wins):
@@ -347,11 +360,14 @@ class MainGame {
         this.gameAudio.pause();
         // Stop the sprites sounds:
         this.busHorn.pause();
+        this.motorcycleSound.pause();
         // Play game over music:
         this.winningAudio.play();
+        // Do not allow to use space event:
+        canUseSpace = false;
 
         // 2. Hide the canvas:
-        canvas.style.display = "none";
+        canvasContainer.style.display = "none";
         pauseBtn.style.display = "none";
         // 3. Show win screen:
         winScreen.style.display = "block";
@@ -369,8 +385,12 @@ class MainGame {
         // Stop the sprites sounds:
         this.tieFighterSound.pause();
         this.deloreanSound.pause();
+        this.motorcycleSound.pause();
+        // Do not allow to use space event:
+        canUseSpace = false;
+
         // 2. Hide the canvas:
-        canvas.style.display = "none";
+        canvasContainer.style.display = "none";
         pauseBtn.style.display = "none";
         // 3. Show win screen:
         offroadWinScreen.style.display = "block";
@@ -436,12 +456,12 @@ class MainGame {
         this.checkKm();
 
         // If the game is not going, we should stop the music:
-        if(!this.isGameOn) {
+        if (!this.isGameOn) {
             this.gameAudio.pause();
         }
 
         // If the game is goin, we should stop the winning and gameover audios:
-        if(this.isGameOn) {
+        if (this.isGameOn) {
             this.gameoverAudio.pause();
             this.gameoverAudio.currentTime = 0;
             this.winningAudio.pause();

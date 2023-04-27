@@ -1,80 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Let's go to France</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Let's go to France</title>
 
-    <link rel="stylesheet" href="./styles/style.css">
-</head>
-<body>
-
-    <div class="container">
-
-        <!-- Start Screen -->
-        <div id="start-screen">
-            <img id="game-poster" src="images/game-poster.png" alt="game poster">
-            <button id="start-main-game-btn">LET'S GO! >></button>
-        </div>
-    
-        <!-- Main Screen -->
-        <canvas id="main-canvas" width="600" height="650"></canvas>
-        <button id="pause-btn">Pause</button>
-        <button id="play-btn">Play</button>
-    
-        <!-- Game Over Screen -->
-        <div id="gameover-screen">
-            <img id="gameover-img" src="images/gameover-screen.png" alt="gameover img">
-            <div id="gameover-screen-buttons">
-                <button id="game-over-restart-btn">Restart game?</button>
-                <button id="game-over-offroad-btn">Train some off-road first!</button>
-                <button id="game-over-exit">Exit</button>
+        <link rel="stylesheet" href="./styles/style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Start Screen -->
+            <div id="start-screen">
+                <img
+                    id="game-poster"
+                    src="images/game-poster.png"
+                    alt="game poster"
+                />
+                <button id="start-main-game-btn">LET'S GO! >></button>
             </div>
-        </div>
-    
-        <!-- Win Screen -->
-        <div id="win-screen">
-            <img id="win-img" src="images/win-screen.png" alt="win img">
-            <div id="win-screen-down-container">
-                <p class="score-p">Your score: <span id="score"></span></p>
-                <div id="win-screen-buttons">
-                    <button id="back-to-start-btn">Maybe go again?</button>
-                    <button id="exit-btn">Exit</button>
-                    <button id="start-offroad-btn">Let's get dirty!</button>
+
+            <!-- Main Screen -->
+            <div id="canvas-container">
+                <div id="p-text-container">
+                    <p id="p-for-km">
+                        Km left to ride: <span id="km-to-show"></span>
+                    </p>
+                    <p id="p-for-score">
+                        Score: <span id="score-to-show"></span>
+                    </p>
                 </div>
-                
+                <canvas id="main-canvas" width="600" height="650"></canvas>
             </div>
-        </div>
-    
-        <!-- Offroad Win Screen -->
-        <div id="offroad-win-screen">
-            <img id="offroad-win-img" src="images/offroad-win-screen.png" alt="offroad win img">
-            <div id="offroad-win-screen-down-container">
-                <p class="score-p">Your score: <span id="offroad-score"></span></p>
-                <div id="offroad-win-screen-buttons">
-                    <button id="back-to-offroad-btn">Off-road again?</button>
-                    <button id="offroad-exit-btn">Exit</button>
+            <button id="pause-btn">Pause</button>
+            <button id="play-btn">Play</button>
+
+            <!-- Game Over Screen -->
+            <div id="gameover-screen">
+                <img
+                    id="gameover-img"
+                    src="images/gameover-screen.png"
+                    alt="gameover img"
+                />
+                <div id="gameover-screen-down-container">
+                    <p class="score-p">Your score: <span id="gameover-score"></span></p>
+                    <div id="gameover-screen-buttons">
+                        <button id="game-over-restart-btn">
+                            Restart game?
+                        </button>
+                        <button id="game-over-offroad-btn">
+                            Train some off-road first!
+                        </button>
+                        <button id="game-over-exit">Exit</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-        <!-- Thank you screen -->
-        <div id="thankyou-screen">
-            <img id="thankyou-img" src="images/thankyou-screen.png" alt="thankyou img">
-            <div id="thankyou-screen-down-container">
-                <a href="https://github.com/pedromndias/lets-ride-to-france-game" target="_blank">Take a look at the code</a>
-                <button id="thankyou-exit-btn">Back to Main Screen</button>
+
+            <!-- Win Screen -->
+            <div id="win-screen">
+                <img id="win-img" src="images/win-screen.png" alt="win img" />
+                <div id="win-screen-down-container">
+                    <p class="score-p">Your score: <span id="score"></span></p>
+                    <div id="win-screen-buttons">
+                        <button id="back-to-start-btn">Maybe go again?</button>
+                        <button id="exit-btn">Exit</button>
+                        <button id="start-offroad-btn">Let's get dirty!</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Offroad Win Screen -->
+            <div id="offroad-win-screen">
+                <img
+                    id="offroad-win-img"
+                    src="images/offroad-win-screen.png"
+                    alt="offroad win img"
+                />
+                <div id="offroad-win-screen-down-container">
+                    <p class="score-p">
+                        Your score: <span id="offroad-score"></span>
+                    </p>
+                    <div id="offroad-win-screen-buttons">
+                        <button id="back-to-offroad-btn">
+                            Off-road again?
+                        </button>
+                        <button id="offroad-exit-btn">Exit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thank you screen -->
+            <div id="thankyou-screen">
+                <img
+                    id="thankyou-img"
+                    src="images/thankyou-screen.png"
+                    alt="thankyou img"
+                />
+                <div id="thankyou-screen-down-container">
+                    <a
+                        href="https://github.com/pedromndias/lets-ride-to-france-game"
+                        target="_blank"
+                        >Take a look at the code</a
+                    >
+                    <button id="thankyou-exit-btn">Back to Main Screen</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="./javascript/main.js"></script>
-    <script src="./javascript/MainGame.js"></script>
-    <script src="./javascript/Sprite.js"></script>
-    <script src="./javascript/Rider.js"></script>
-    <script src="./javascript/Road.js"></script>
-    <script src="./javascript/Barrier.js"></script>
-    
-</body>
+        <script src="./javascript/main.js"></script>
+        <script src="./javascript/MainGame.js"></script>
+        <script src="./javascript/Sprite.js"></script>
+        <script src="./javascript/Rider.js"></script>
+        <script src="./javascript/Road.js"></script>
+        <script src="./javascript/Barrier.js"></script>
+    </body>
 </html>

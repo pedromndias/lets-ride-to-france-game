@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
+
 body {
     margin: 0;
     background-color: rgb(255, 250, 206);
@@ -53,6 +55,26 @@ img {
     font-size: 1.3em;
 }
 
+#p-text-container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+    position: absolute;
+    z-index: 1;
+    width: 600px;
+}
+#p-text-container p {
+    margin: 0;
+    text-shadow: 1px 1px 2px white;
+    
+    font-family: 'Sigmar', cursive;
+    letter-spacing: 1px;
+}
+#p-text-container span {
+    font-size: 1.5em;
+}
+
 /* SCREENS */
 
 #start-screen,
@@ -66,7 +88,7 @@ img {
     align-items: center;
 }
 
-#main-canvas,
+#canvas-container,
 #gameover-screen,
 #win-screen,
 #thankyou-screen,
