@@ -69,8 +69,7 @@ class Sprite {
                     this.w = 70;
                     this.h = 120;
                     this.isPoliceCar = true;
-                }
-                else {
+                } else {
                     // Other vehicles:
                     this.w = 70;
                     this.h = 120;
@@ -109,16 +108,14 @@ class Sprite {
                 this.w = 100;
                 this.h = 80;
                 this.y = 140;
-            } 
-            else if (randomNumImage === 6) {
+            } else if (randomNumImage === 6) {
                 // For the tie-fighter:
                 this.isTieFighter = true;
                 this.spriteSpeed -= 3;
                 this.w = 120;
                 this.h = 110;
                 this.y = 140;
-            }
-             else if (randomNumImage === 7) {
+            } else if (randomNumImage === 7) {
                 // For the batmobile:
                 this.spriteSpeed -= 2;
                 this.w = 80;

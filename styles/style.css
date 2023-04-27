@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sigmar&display=swap");
 
 body {
     margin: 0;
@@ -34,7 +34,7 @@ img {
     text-decoration: none;
     font-size: 1.5em;
     font-weight: bold;
-    color:darkcyan;
+    color: darkcyan;
     background-color: rgb(165, 210, 30);
     padding: 10px;
     border: 1px solid darkcyan;
@@ -67,8 +67,8 @@ img {
 #p-text-container p {
     margin: 0;
     text-shadow: 1px 1px 2px white;
-    
-    font-family: 'Sigmar', cursive;
+
+    font-family: "Sigmar", cursive;
     letter-spacing: 1px;
 }
 #p-text-container span {
@@ -113,7 +113,6 @@ img {
     margin-left: 20px;
 }
 
-
 /* BUTTONS */
 
 button {
@@ -135,8 +134,7 @@ button {
 }
 
 button:hover,
-button:focus
- {
+button:focus {
     background-color: rgb(108, 208, 241);
 }
 
@@ -146,8 +144,8 @@ button:active {
 }
 
 #start-offroad-btn {
-    background-color:rgb(214, 61, 0);
-    color:blanchedalmond;
+    background-color: rgb(214, 61, 0);
+    color: blanchedalmond;
 }
 #start-offroad-btn:hover {
     background-color: blanchedalmond;
@@ -187,8 +185,8 @@ button:active {
 
 #game-over-offroad-btn,
 #back-to-offroad-btn {
-    background-color:rgb(214, 61, 0);
-    color:blanchedalmond;
+    background-color: rgb(214, 61, 0);
+    color: blanchedalmond;
 }
 #game-over-offroad-btn:hover,
 #back-to-offroad-btn:hover {

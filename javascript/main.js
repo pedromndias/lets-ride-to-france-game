@@ -25,7 +25,7 @@ const playBtn = document.querySelector("#play-btn");
 // Scores:
 const scoreDOM = document.querySelector("#score");
 const offroadScoreDOM = document.querySelector("#offroad-score");
-const gameoverScoreDOM = document.querySelector("#gameover-score")
+const gameoverScoreDOM = document.querySelector("#gameover-score");
 
 const canvasContainer = document.querySelector("#canvas-container");
 const paragaphTextContainer = document.querySelector("#p-text-container");
@@ -41,7 +41,6 @@ const ctx = canvas.getContext("2d");
 
 // Create a general game object (to be accessed by other functions, event listeners, etc..):
 let mainGameObj;
-
 
 // Let's create a variable to check if the game is paused or not:
 let isPaused = false;
@@ -146,7 +145,7 @@ const pauseGameFunction = () => {
     mainGameObj.motorcycleSound.pause();
     // Change the value of isPaused:
     isPaused = true;
-}
+};
 
 // Create a function to unpause the game:
 const unPauseGameFunction = () => {
@@ -159,7 +158,7 @@ const unPauseGameFunction = () => {
 
     // Change the value of isPaused:
     isPaused = false;
-}
+};
 
 // * ADD EVENT LISTENERS
 
@@ -260,11 +259,11 @@ window.addEventListener("keyup", (event) => {
 });
 // Let's create a keydown event listener to also pause the game using the spacebar:
 window.addEventListener("keydown", (event) => {
-    if(canUseSpace && event.code === "Space"){
+    if (canUseSpace && event.code === "Space") {
         if (!isPaused) {
             pauseGameFunction();
         } else {
             unPauseGameFunction();
         }
     }
-})
+});

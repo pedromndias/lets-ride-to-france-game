@@ -12,7 +12,6 @@ class Barrier {
             this.x = canvas.width - 83;
         }
 
-        
         this.y = -100;
         this.w = 30;
         this.h = 100;
@@ -23,9 +22,9 @@ class Barrier {
     // Draw it:
     draw = () => {
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-    }
+    };
     // Move it:
     move = () => {
         this.y += this.speed;
-    }
+    };
 }
