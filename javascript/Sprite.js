@@ -9,8 +9,13 @@ class Sprite {
         this.img.src = "";
         this.w;
         this.h;
-        let spriteSpeed;
+        this.spriteSpeed = 4;
         this.isXWing = false;
+        // Let's create a variable to check if the sprite ir a rock/road block:
+        this.isBlock;
+
+        // Create audio for sprites:
+        this.xWingSound = new Audio("audio/xwing-flying.mp3");
 
         // Depending on the sprite variable, we will render different type of cars/blocks/rocks:
         if (sprite === "car") {
@@ -34,13 +39,15 @@ class Sprite {
 
         // The road blocks should move as fast as the road and should only be on the side left lane (130px):
         if (sprite === "car") {
+            // If the sprite is a roadblock, we will keep its speed as the road speed (to show it "not moving"):
             if (randomNumImage === 8) {
-                spriteSpeed = 4;
+                this.isBlock = true;
+                this.spriteSpeed = 4;
                 randomNumX = 120;
                 this.w = 80;
                 this.h = 80;
             } else {
-                spriteSpeed = 2;
+                this.spriteSpeed -= 2;
                 randomNumX = Math.floor(Math.random() * 4) * 92 + 130;
                 if (randomNumImage === 9 || randomNumImage === 10) {
                     // Motorcycles dimensions:
@@ -63,7 +70,7 @@ class Sprite {
 
             // If the randomNumImage is 2, we will render a motorcycle wich is smaller than the other sprites:
             if (randomNumImage === 2) {
-                spriteSpeed = 2;
+                this.spriteSpeed -= 2;
                 this.w = 50;
                 this.h = 80;
                 this.y = 140;
@@ -72,30 +79,38 @@ class Sprite {
             else if (randomNumImage === 3) {
                 randomNumX = 0;
                 this.isXWing = true;
-                spriteSpeed = 10;
+                this.spriteSpeed += 6;
                 this.w = 300;
                 this.h = 300;
                 this.y = 0;
+                // Play xWing sound:
+                this.xWingSound.play();
+                this.xWingSound.volume = 0.3;
             } 
             // If the randomNumImage is 4 or 5, we will render our rocks as fast as the road:
             else if (randomNumImage === 4 || randomNumImage === 5) {
-                spriteSpeed = 4;
+                this.isBlock = true;
+                this.spriteSpeed = 4;
                 this.w = 80;
                 this.h = 120;
                 this.y = 140;
             } else if (randomNumImage === 6) {
-                spriteSpeed = 4;
+                // For the landspeeder:
+                this.isBlock = true;
+                this.spriteSpeed = 4;
                 this.w = 130;
                 this.h = 90;
                 this.y = 140;
             } else if (randomNumImage === 7) {
-                spriteSpeed = 4;
+                // For the dino:
+                this.isBlock = true;
+                this.spriteSpeed = 4;
                 this.w = 130;
                 this.h = 130;
                 this.y = 140;
             }
             else {
-                spriteSpeed = 2;
+                this.spriteSpeed -= 2;
                 this.w = 100;
                 this.h = 150;
                 this.y = 140;
@@ -103,7 +118,6 @@ class Sprite {
         }
 
         this.x = randomNumX;
-        this.speed = spriteSpeed;
     }
 
     // * Add sprite's methods:
@@ -115,10 +129,10 @@ class Sprite {
     // Move it torwards the bottom;
     move = () => {
         if (this.isXWing) {
-            this.x += this.speed;
-            this.y += this.speed;
+            this.x += this.spriteSpeed;
+            this.y += this.spriteSpeed;
         } else {
-            this.y += this.speed;
+            this.y += this.spriteSpeed;
         }
     };
 }
