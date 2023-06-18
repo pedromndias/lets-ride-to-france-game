@@ -159,6 +159,9 @@ A fun game where the player needs to avoid traffic on the highway from Barcelona
 - draw();
 - move();
 
+## Usage
+This project is live on the following link: [https://pedromndias.github.io/lets-ride-to-france-game/]. Alternatively, you can just download the files and open the index.html on your browser.
+
 # Extra Links 
 
 ### Trello
