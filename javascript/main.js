@@ -169,22 +169,22 @@ startMainGameBtn.addEventListener("click", () => {
 // Note the boolean argument sent in the function, so we can render the normal road or the offroad set.
 // Create an event listener fot the startOffroadGameBtn to execute startOffroadGame function:
 startOffroadBtn.addEventListener("click", () => {
-    console.log("Going off road");
+    // console.log("Going off road");
     startMainGame(false);
 });
 // We can also create an event listener to reset the game on the game over section:
 gameoverRestartBtn.addEventListener("click", () => {
-    console.log("Game restarted after gameover");
+    // console.log("Game restarted after gameover");
     startMainGame(true);
 });
 // And one if the player wants to play again:
 backToStartBtn.addEventListener("click", () => {
-    console.log("Game restarted after arriving in France");
+    // console.log("Game restarted after arriving in France");
     startMainGame(true);
 });
 // And also another event in case it's gameover and the player wants to go offroad:
 gameoverStartOffroadBtn.addEventListener("click", () => {
-    console.log("Going offroad after gameover");
+    // console.log("Going offroad after gameover");
     startMainGame(false);
 });
 
